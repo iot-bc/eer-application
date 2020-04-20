@@ -11,11 +11,18 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+const connect = require("./utils/db");
+
+/*
+   ROUTES
+ */
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const testRouter = require("./routes/test");
 
 const app = express();
+connect();
+
 app.listen(3000, () => {
   console.log("3000 is listening");
 });

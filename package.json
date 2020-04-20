@@ -5,6 +5,8 @@
   "scripts": {
     "server": "nodemon ./server/app.js",
     "serve": "vue-cli-service serve",
+    "insertData": "node ./server/config/database/insert.js",
+    "dumpData": "node ./server/config/database/dump.js",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
