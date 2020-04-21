@@ -1,29 +1,18 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>{{ test_data }}</h2>
-  </div>
+  <div class="hello"></div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Main",
   props: {
     msg: String
   },
   data() {
-    return {
-      test_data: "before"
-    };
+    return {};
   },
-  mounted() {
-    this.test_api();
-  },
-  methods: {
-    test_api() {
-      this.$axios.get("/api/test").then(res => (this.test_data = res.data));
-    }
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 
