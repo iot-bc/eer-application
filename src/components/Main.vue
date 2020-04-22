@@ -2,7 +2,7 @@
   <el-container class="main">
     <el-header height="75px">header</el-header>
     <el-container>
-      <el-aside width="15%">aside</el-aside>
+      <el-aside width="12.5%">aside</el-aside>
       <el-container>
         <el-main>main</el-main>
         <el-footer height="50px">footer</el-footer>
@@ -44,5 +44,5 @@ export default {
         background-color alpha(black,0.1)
         position fixed
         bottom 0
-        width 85%
+        width 87.5%
 </style>

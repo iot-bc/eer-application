@@ -21,6 +21,8 @@ import {
   Header,
   Footer,
   Aside,
+  Row,
+  Col,
   Menu,
   MenuItem,
   Submenu,
@@ -29,8 +31,10 @@ import {
 } from "element-ui";
 Vue.prototype.$ELEMENT = { size: "small", zIndex: 3000 };
 Vue.use(Button);
+
 useAll(Vue, [Form, FormItem, Input]); // form use
 useAll(Vue, [Container, Main, Header, Footer, Aside]); // container use
+useAll(Vue, [Col, Row]); // layout use
 useAll(Vue, [Menu, MenuItem, Submenu]); // menu use
 useAll(Vue, [Tabs, TabPane]); // tab use
 

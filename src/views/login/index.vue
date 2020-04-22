@@ -24,4 +24,5 @@ export default {
   width 60%
   height 300px
   border 2px saddlebrown solid
+  padding 20px
 </style>
