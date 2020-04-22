@@ -17,10 +17,8 @@
   -moz-osx-font-smoothing grayscale
   text-align center
   color #2c3e50
-  margin-top 60px
-
-  #header
-    position fixed
-    left 0
-    top 0
+#header
+  position absolute
+  left 0
+  top 0
 </style>

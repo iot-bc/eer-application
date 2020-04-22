@@ -19,7 +19,9 @@ export default {
 
 <style scoped lang="stylus">
 .login-container
-  width 600px
+  margin-left 20%
+  margin-top 100px
+  width 60%
   height 300px
   border 2px saddlebrown solid
 </style>

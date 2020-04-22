@@ -1,5 +1,6 @@
 <template>
   <div id="test-div">
+    <h1>{{ test_url }}</h1>
     <vue-json-pretty
       :data="test_data"
       :deep="4"
