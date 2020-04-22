@@ -1,11 +1,8 @@
-function Device(userID, deviceName) {
+function Device() {
   var userID;
   var deviceName;
   var deviceID;
   var state;
-
-  this.userID = userID;
-  this.deviceName = deviceName;
 
   this.setUserID = function(userID) {
     this.userID = userID;

@@ -1,11 +1,8 @@
-function User(userName, password) {
+function User() {
   var userName;
   var userID;
   var password;
   var accessCode;
-
-  this.userName = userName;
-  this.password = password;
 
   this.setUserName = function(userName) {
     this.userName = userName;

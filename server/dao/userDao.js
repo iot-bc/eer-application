@@ -1,4 +1,4 @@
-var user = require("./../models/user.js");
+var User = require("./../models/user");
 
 function UserDao() {
   this.addUser = function(user) {
@@ -29,6 +29,11 @@ function UserDao() {
     var password = user.getPassword();
 
     //database search operation
+
+    //查出来的数据可能是一个数组，先这么表示
+    var result = new User();
+
+    return result;
   };
 }
 
