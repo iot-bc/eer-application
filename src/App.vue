@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <el-header id="header">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/test">Test</router-link> |
-      <router-link to="/login">Login</router-link> |
+    <el-header id="header" height="30px">
+      <router-link :to="{ name: 'Home' }">Home</router-link> |
+      <router-link :to="{ name: 'Test' }">Test</router-link> |
+      <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
+      |
+      <router-link :to="{ name: 'Register', params: {} }">Register</router-link>
+      |
       <router-link to="/main">User</router-link>
     </el-header>
     <router-view />

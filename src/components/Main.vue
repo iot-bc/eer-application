@@ -1,8 +1,12 @@
 <template>
   <el-container class="main">
-    <el-header height="75px">header</el-header>
+    <el-header height="75px">
+      <nav-bar></nav-bar>
+    </el-header>
     <el-container>
-      <el-aside width="12.5%">aside</el-aside>
+      <el-aside width="180px">
+        <side-bar></side-bar>
+      </el-aside>
       <el-container>
         <el-main>main</el-main>
         <el-footer height="50px">footer</el-footer>
@@ -12,8 +16,11 @@
 </template>
 
 <script>
+import NavBar from "./navbar/index";
+import SideBar from "./sidebar/index";
 export default {
   name: "Main",
+  components: { SideBar, NavBar },
   props: {
     msg: String
   },
@@ -30,16 +37,19 @@ export default {
 
 .main
   border 1px solid navajowhite
+  overflow-y hidden
   /*&>*, &>*>*, &>*>*>**/
   /*  border 1px solid black*/
   &>.el-header
-    background-color: #B3C0D1;
+    background-color: $color
+    padding 0 5px
   &>.el-container
     .el-aside
-      background-color #e6a23c
+      background-color white
+      overflow-y hidden
     &>.el-container
       .el-main
-        background-color #4d20b4
+        background-color white
       .el-footer
         background-color alpha(black,0.1)
         position fixed

@@ -2,13 +2,16 @@
   <el-main>
     <img alt="Vue logo" src="../../assets/logo.png" />
     <el-row>
-      <el-button size="medium" type="primary" @click="$router.push('/login')"
+      <el-button
+        size="medium"
+        type="primary"
+        @click="$router.push({ name: 'Login', params: { type: 'login' } })"
         >Login</el-button
       >
       <el-button
         size="medium"
         type="primary"
-        @click="$router.push('/login?register=1')"
+        @click="$router.push({ name: 'Login', params: { type: 'register' } })"
         >Register</el-button
       >
     </el-row>

@@ -1,13 +1,18 @@
 <template>
-  <el-menu class="main-side-bar">
-    header
-  </el-menu>
+  <div class="main-side-bar">
+    <side-general></side-general>
+  </div>
 </template>
 
 <script>
+import SideGeneral from "./components/SideGeneral";
 export default {
-  name: "SideBar"
+  name: "SideBar",
+  components: { SideGeneral }
 };
 </script>
 
-<style scoped></style>
+<style lang="stylus" scoped>
+.main-side-bar
+  overflow hidden
+</style>

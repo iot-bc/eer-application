@@ -26,5 +26,12 @@ module.exports = {
     config.resolve.alias
       .set("@", resolve("./src"))
       .set("components", resolve("./src/components"));
+  },
+  css: {
+    loaderOptions: {
+      stylus: {
+        import: "~@/style/style.styl"
+      }
+    }
   }
 };
