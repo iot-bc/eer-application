@@ -1,34 +1,57 @@
 <template>
   <div id="test-div">
-    <h1>{{ test_url }}</h1>
-    <vue-json-pretty
-      :data="test_data"
-      :deep="4"
-      showLine
-      highlightMouseoverNode
-    ></vue-json-pretty>
+    <el-row>
+      <el-col :span="12"
+        ><response-handler
+          class="test-res-hd"
+          url="/api/test"
+          method="get"
+        ></response-handler
+      ></el-col>
+      <el-col :span="12">
+        <response-handler
+          class="test-res-hd"
+          url="/api/register"
+          method="post"
+          :payload="{ username: 'laoge', password: 123123 }"
+        ></response-handler>
+        <response-handler
+          class="test-res-hd"
+          url="/api/login"
+          method="post"
+          :payload="{ username: 'laogebiss', password: 123123 }"
+        ></response-handler>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import VueJsonPretty from "vue-json-pretty";
+import ResponseHandler from "./ResponseHandler";
 export default {
   name: "Test",
   components: {
-    VueJsonPretty
+    ResponseHandler
   },
   data() {
     return {
-      test_url: "/api/test",
-      test_data: "before"
+      test_url: "/api/register",
+      test_data: "before",
+      test_method: ""
     };
   },
   mounted() {
-    this.test_api();
+    // this.test_api();
   },
   methods: {
     test_api() {
-      this.$axios.get(this.test_url).then(res => (this.test_data = res.data));
+      // this.$axios.get(this.test_url).then(res => (this.test_data = res.data));
+      this.$axios
+        .post(this.test_url, { test: "test", type: "post" })
+        .then(res => {
+          this.test_method = res.config.method;
+          this.test_data = res.data;
+        });
     }
   }
 };
@@ -36,8 +59,12 @@ export default {
 
 <style lang="stylus" scoped>
 #test-div
-  font-size smaller !important
-  margin-left 20%
-  width 60%
-  text-align left
+  width 100%
+  height 100%
+  padding-top 50px
+  &>.test-res-hd
+    display flex
+    flex-direction column
+    width 400px
+    height auto
 </style>

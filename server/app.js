@@ -17,7 +17,8 @@ const connect = require("./utils/db");
    ROUTES
  */
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
 const testRouter = require("./routes/test");
 
 const app = express();
@@ -38,7 +39,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/register", registerRouter);
+app.use("/login", loginRouter);
 app.use("/test", testRouter);
 
 // catch 404 and forward to error handler

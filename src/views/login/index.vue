@@ -7,22 +7,41 @@
       <el-form-item label="Password">
         <el-input type="password"></el-input>
       </el-form-item>
+      <el-form-item>
+        <el-button>Login</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {};
+  },
+  methods: {
+    login(formData) {
+      console.log("log in");
+    },
+    register() {
+      console.log("register");
+    }
+  }
 };
 </script>
 
 <style scoped lang="stylus">
 .login-container
-  margin-left 20%
-  margin-top 100px
-  width 60%
-  height 300px
-  border 2px saddlebrown solid
-  padding 20px
+  margin-left 10%
+  width 80%
+  height 100%
+  display flex
+  justify-content center
+  align-items center
+  &>.el-form
+    padding 20px
+    width 350px
+    height auto
+    border 2px solid black
 </style>

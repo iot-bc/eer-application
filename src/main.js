@@ -29,7 +29,7 @@ import {
   Tabs,
   TabPane
 } from "element-ui";
-Vue.prototype.$ELEMENT = { size: "small", zIndex: 3000 };
+// Vue.prototype.$ELEMENT = { size: "small", zIndex: 3000 };
 Vue.use(Button);
 
 useAll(Vue, [Form, FormItem, Input]); // form use

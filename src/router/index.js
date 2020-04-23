@@ -7,7 +7,19 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("@/views/home")
+    component: () => import("@/views/Home.vue"),
+    children: [
+      {
+        path: "/",
+        name: "Home",
+        component: () => import("@/views/home")
+      },
+      {
+        path: "/login",
+        name: "Login",
+        component: () => import("@/views/login")
+      }
+    ]
   },
   {
     path: "/test",
@@ -17,11 +29,11 @@ const routes = [
   {
     path: "/register"
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("@/views/login")
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: () => import("@/views/login")
+  // },
   {
     path: "/main",
     name: "Main",
