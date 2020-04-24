@@ -7,7 +7,6 @@
       <el-aside width="180px">
         <side-bar></side-bar>
       </el-aside>
-
       <el-main>main</el-main>
     </el-container>
   </el-container>
