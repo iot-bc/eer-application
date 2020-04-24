@@ -8,6 +8,9 @@
         <el-input type="password"></el-input>
       </el-form-item>
 
+      <el-divider></el-divider>
+      <el-divider content-position="center">Divide</el-divider>
+
       <el-form-item v-if="log_type === '/register'">
         <el-radio-group>
           <el-radio></el-radio>

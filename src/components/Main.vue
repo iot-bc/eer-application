@@ -7,10 +7,8 @@
       <el-aside width="180px">
         <side-bar></side-bar>
       </el-aside>
-      <el-container>
-        <el-main>main</el-main>
-        <el-footer height="50px">footer</el-footer>
-      </el-container>
+
+      <el-main>main</el-main>
     </el-container>
   </el-container>
 </template>
@@ -47,12 +45,6 @@ export default {
     .el-aside
       background-color white
       overflow-y hidden
-    &>.el-container
-      .el-main
-        background-color white
-      .el-footer
-        background-color alpha(black,0.1)
-        position fixed
-        bottom 0
-        width 87.5%
+    .el-main
+      background-color white
 </style>

@@ -22,20 +22,23 @@ export default {
 
 <style lang="stylus">
 .main-nav-search
-  line-height $nav-height
+  //line-height $nav-height
   background transparent !important
+  /*padding-top 24px*/
   &>.el-button
-    font-size large
+    font-size larger
     display inline-block
+    vertical-align middle
     padding 6px
     margin-right 5px
   &>.el-input
     display inline-block
+    font-size large
     width 150px
     background transparent !important
     &>.el-input__inner
       height 35px
-      padding 5px 5px 0
+      /*padding 5px 5px 0*/
       line-height 30px
       color white
       border-radius 0

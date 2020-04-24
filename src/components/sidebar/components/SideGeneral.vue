@@ -1,5 +1,5 @@
 <template>
-  <div class="side-general">
+  <div class="main-side-general">
     <h2>General</h2>
     <el-menu
       default-active="2"
