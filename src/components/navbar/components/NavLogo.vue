@@ -1,6 +1,6 @@
 <template>
   <div class="main-nav-logo">
-    <h1>E<code>er</code></h1>
+    <h1>EER<code>APP</code></h1>
   </div>
 </template>
 
@@ -13,8 +13,8 @@ export default {
 <style scoped>
 h1 {
   color: white;
-  font-size: 48px;
-  margin: 0;
+  font-size: 42px;
+  margin-top: 10px;
   font-weight: bold;
 }
 code {

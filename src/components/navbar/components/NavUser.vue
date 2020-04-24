@@ -1,15 +1,15 @@
 <template>
   <el-row :span="24" class="main-nav-user">
     <el-col :span="9">
-      <el-avatar
-        :size="50"
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-      ></el-avatar>
+      <el-avatar :size="56" fit="contain" :key="avatar_src">
+        <img src="../../../assets/laoge.png" alt="" />
+      </el-avatar>
     </el-col>
     <el-col :span="12">
       <el-dropdown>
         <span class="el-dropdown-link">
-          {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
+          <code>{{ username }}</code>
+          <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>Account</el-dropdown-item>
@@ -26,23 +26,35 @@ export default {
   name: "NavUser",
   data() {
     return {
-      username: "laoge"
+      username: "laoge11",
+      avatar_src:
+        "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
     };
-  }
+  },
+  created() {},
+  mounted() {},
+  methods: {}
 };
 </script>
 
 <style lang="stylus" scoped>
 .main-nav-user
+  margin-top 4px
   padding 0 10px
   border 0
   &>.el-col
     margin-left 8px
 .el-avatar
-  margin-top 10px
+  margin-top 5px
+  border 1px white solid
 .el-dropdown
   color white
   cursor pointer
-  &>span:hover
+span.el-dropdown-link
+  font-size 18px
+  width auto
+  &>*
+    display inline
+  &:hover
     text-shadow $text-shadow-primary
 </style>

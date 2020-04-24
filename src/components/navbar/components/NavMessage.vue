@@ -1,26 +1,7 @@
 <template>
   <div class="main-nav-message">
     <el-popover ref="pop" placement="bottom" width="250" trigger="click">
-      <el-table
-        :data="[
-          {
-            name: '捞哥1',
-            address: '捞哥biss'
-          },
-          {
-            name: '捞哥2',
-            address: '捞哥biss'
-          },
-          {
-            name: '捞哥3',
-            address: '捞哥biss'
-          },
-          {
-            name: '捞哥4',
-            address: '捞哥biss'
-          }
-        ]"
-      >
+      <el-table :data="messages">
         <el-table-column
           width="100"
           property="name"
@@ -33,20 +14,58 @@
         ></el-table-column>
       </el-table>
     </el-popover>
-    <el-badge type="primary" class="i-badge" value="12">
+    <el-badge
+      v-if="messages.length > 0"
+      type="primary"
+      class="i-badge"
+      :value="messages.length"
+    >
       <i v-popover:pop class="el-icon-bell" @click="showMessage"></i>
     </el-badge>
+    <i v-else v-popover:pop class="el-icon-bell" @click="showMessage"></i>
   </div>
 </template>
 
 <script>
 export default {
   name: "NavMessage",
+  data() {
+    return {
+      initMessages: [
+        {
+          name: "捞哥1111",
+          address: "捞哥biss"
+        },
+        {
+          name: "捞哥222",
+          address: "捞哥biss"
+        },
+        {
+          name: "捞哥3333",
+          address: "捞哥biss"
+        },
+        {
+          name: "捞哥4",
+          address: "捞哥biss"
+        }
+      ],
+      messages: []
+    };
+  },
   created() {
     this.getMessage();
   },
+  mounted() {},
+  computed: {
+    messages_len: function() {
+      return this.messages.length;
+    }
+  },
   methods: {
-    getMessage() {},
+    getMessage() {
+      this.initMessages.forEach(val => this.messages.push(val));
+      // this.messages.push(this);
+    },
     showMessage() {}
   }
 };

@@ -43,7 +43,7 @@ export default {
     height ($nav-height - 40px)
     margin-top 22px
   &>.main-nav-user
-    width 200px
+    min-width 220px
     float right
     line-height $nav-height
 </style>

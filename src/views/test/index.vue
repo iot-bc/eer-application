@@ -21,6 +21,16 @@
           method="post"
           :payload="{ username: 'laogebiss', password: 123123 }"
         ></response-handler>
+        <response-handler
+          class="test-res-hd"
+          url="/api/device"
+          method="get"
+        ></response-handler>
+        <response-handler
+          class="test-res-hd"
+          url="/api/device/all"
+          method="get"
+        ></response-handler>
       </el-col>
     </el-row>
   </div>
