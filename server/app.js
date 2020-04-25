@@ -10,6 +10,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const helmet = require("helmet");
 
 const connect = require("./utils/db");
 
@@ -22,10 +23,15 @@ connect();
 const PORT = 3000;
 app.listen(PORT, () => console.log(`App is listening on ${PORT}`));
 
+/*
+   Use Third-Party Middleware extensions
+ */
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -17,6 +17,7 @@
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
     "express": "^4.17.1",
+    "helmet": "^3.22.0",
     "http-errors": "^1.7.3",
     "mongoose": "^5.9.9",
     "morgan": "^1.10.0",
