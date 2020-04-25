@@ -13,20 +13,14 @@ const logger = require("morgan");
 
 const connect = require("./utils/db");
 
-/*
-   ROUTES
- */
-const indexRouter = require("./routes/index");
-const registerRouter = require("./routes/register");
-const loginRouter = require("./routes/login");
-const testRouter = require("./routes/test");
-
 const app = express();
 connect();
 
-app.listen(3000, () => {
-  console.log("3000 is listening");
-});
+/*
+   Listen Port
+ */
+const PORT = 3000;
+app.listen(PORT, () => console.log(`App is listening on ${PORT}`));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -38,9 +32,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
+/*
+   ROUTES
+ */
+const indexRouter = require("./routes/index");
+const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
+const deviceRouter = require("./routes/device");
+const testRouter = require("./routes/test");
+
 app.use("/", indexRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
+app.use("/device", deviceRouter);
 app.use("/test", testRouter);
 
 // catch 404 and forward to error handler

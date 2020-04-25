@@ -10,26 +10,7 @@ const config = require("./../config/database/database.config");
 const URL = config.url + config.database;
 const OPTIONS = config.options;
 
-// function DB(){
-//   this.getConnection = function(){
-//     mongoose.connect(URL, OPTIONS);
-//     mongoose.connection
-//     .on("connected", () => {
-//       console.log("Mongoose connection open to " + URL);
-//     })
-//     .on("error", err => {
-//       console.error("Mongoose connection error: " + err);
-//     })
-//     .on("disconnected", () => {
-//       console.log("Mongoose connection disconnected");
-//     });
-//   return mongoose.connection;
-//   };
-// };
-
-// module.exports = DB;
-
-module.exports.getConnection = function() {
+module.exports = function() {
   mongoose.connect(URL, OPTIONS);
   mongoose.connection
     .on("connected", () => {

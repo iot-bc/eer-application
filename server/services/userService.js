@@ -1,5 +1,5 @@
-const DB = require("./../utils/db");
-const connection = DB.getConnection();
+const connect = require("./../utils/db");
+connect();
 const EncryptMethod = require("./../utils/encryptMethod");
 const IDProducer = require("./../utils/idProducer");
 const idProducer = new IDProducer();

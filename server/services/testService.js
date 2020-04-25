@@ -1,5 +1,5 @@
-const DB = require("./../utils/db");
-let connection = DB.getConnection();
+const connect = require("./../utils/db");
+connect();
 
 let User = require("./../models/userSchema");
 let user = new User({
