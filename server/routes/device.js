@@ -8,19 +8,24 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", function(req, res, next) {
-  if (req.url === null) next();
-  res.send({ device: "laoge's device" });
-});
-
-router.post("/", function(req, res, next) {
-  if (req.url === null) next();
-  res.send({ device: "laoge's device been updated" });
-});
-
-router.get("/all", function(req, res, next) {
-  if (req.url === null) next();
-  res.send({ device: "laoge's devicessss" });
-});
+router
+  .route("/")
+  .all(function() {})
+  .get(function(req, res, next) {
+    if (req.url === null) next();
+    res.send({ device: "laoge's device" });
+  })
+  .post(function(req, res, next) {
+    if (req.url === null) next();
+    res.send({ device: "laoge's device been updated" });
+  })
+  .put(function(req, res, next) {
+    if (req.url === null) next();
+    res.send({ device: "laoge's devicessss" });
+  })
+  .delete(function(req, res, next) {
+    if (req.url === null) next();
+    res.send({ device: "laoge's devicessss" });
+  });
 
 module.exports = router;

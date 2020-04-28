@@ -11,11 +11,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require("helmet");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 
 const connect = require("./utils/db");
 
 const app = express();
-connect();
+const connection = connect();
 
 /*
    Listen Port
@@ -38,20 +40,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
+app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: connection })
+  })
+);
 /*
    ROUTES
+   details under ./routes/ directory
  */
-const indexRouter = require("./routes/index");
-const registerRouter = require("./routes/register");
-const loginRouter = require("./routes/login");
-const deviceRouter = require("./routes/device");
-const testRouter = require("./routes/test");
+const router = require("./routes");
 
-app.use("/", indexRouter);
-app.use("/register", registerRouter);
-app.use("/login", loginRouter);
-app.use("/device", deviceRouter);
-app.use("/test", testRouter);
+app.use("/", router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
