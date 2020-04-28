@@ -4,8 +4,8 @@
  * @Filename: org.js
  * @Function: do nothing >_>
  */
-const express = require("express");
-const router = express.Router();
+
+const router = require("express").Router();
 
 router.get("/", function(req, res) {
   // logic process using queryParam

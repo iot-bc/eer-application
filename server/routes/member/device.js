@@ -5,24 +5,27 @@
  * @Function: do nothing >_>
  */
 
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 router
   .route("/")
-  .all(function() {})
+  .all(function(req, res, next) {
+    console.log(req.originalUrl);
+    next();
+  })
   .get(function(req, res, next) {
+    // logic process
     if (req.url === null) next();
     res.send({ device: "laoge's device" });
   })
   .post(function(req, res, next) {
-    if (req.url === null) next();
-    res.send({ device: "laoge's device been updated" });
+    if (!req.body) next();
+    res.send({ device: "laoge's device been updated", msg: req.body });
   })
-  .put(function(req, res, next) {
-    if (req.url === null) next();
-    res.send({ device: "laoge's devicessss" });
-  })
+  // .put(function(req, res, next) {
+  //   if (req.url === null) next();
+  //   res.send({ device: "laoge's devicessss" });
+  // })
   .delete(function(req, res, next) {
     if (req.url === null) next();
     res.send({ device: "laoge's devicessss" });

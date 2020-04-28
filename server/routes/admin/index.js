@@ -5,8 +5,7 @@
  * @Function: do nothing >_>
  */
 
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 const adminOrgRouter = require("./org");
 const adminTeacherRouter = require("./teacher");

@@ -5,16 +5,15 @@
  * @Function: do nothing >_>
  */
 
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 const loginRouter = require("./login");
 const registerRouter = require("./register");
-const adminRouter = require("admin");
-const memberRouter = require("member");
-const teacherRouter = require("teacher");
+const adminRouter = require("./admin");
+const memberRouter = require("./member");
+const teacherRouter = require("./teacher");
 
-let testRouter = require("test");
+let testRouter = require("./test");
 
 router.use("/login", loginRouter);
 router.use("/register", registerRouter);

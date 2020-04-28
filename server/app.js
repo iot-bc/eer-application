@@ -25,13 +25,13 @@ const connection = connect();
 const PORT = 3000;
 app.listen(PORT, () => console.log(`App is listening on ${PORT}`));
 
-/*
-   Use Third-Party Middleware extensions
- */
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+/*
+   Use Third-Party Middleware extensions
+ */
 
 app.use(helmet());
 app.use(logger("dev"));
