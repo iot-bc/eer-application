@@ -9,12 +9,6 @@ const router = require("express").Router();
 
 router.get(
   "/",
-  // current teacher
-  function(req, res, next) {
-    // logic process
-    if (req.originalUrl) next();
-    res.json("teacher laodeyi");
-  },
   // teacher list
   function(req, res, next) {
     //logic process
@@ -23,10 +17,11 @@ router.get(
   }
 );
 
-router.delete("/", function(req, res, next) {
+router.delete("/:teacherID", function(req, res, next) {
+  let tid = req.params.teacherID;
   // logic process
   if (!req.originalUrl) next();
-  res.json("delete current teacher");
+  res.json("delete teacher " + tid);
 });
 
 router.post("/:teacherID", function(req, res, next) {
