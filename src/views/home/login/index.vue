@@ -86,7 +86,7 @@ export default {
           type: "success",
           duration: 3000
         });
-        setTimeout(() => this.$router.push({ name: "Main" }), 1000);
+        setTimeout(() => this.$router.push({ name: "Member" }), 1000);
       } else {
         Notification({
           title: "Login",

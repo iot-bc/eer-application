@@ -9,12 +9,12 @@ const router = require("express").Router();
 
 const memberInfoRouter = require("./info");
 const memberDeviceRouter = require("./device");
-const memberTeacherRouter = require("./teacher");
+const memberCourseRouter = require("./course");
 const memberDataRouter = require("./data");
 
 router.use("/info", memberInfoRouter);
 router.use("/device", memberDeviceRouter);
-router.use("/teacher", memberTeacherRouter);
+router.use("/teacher", memberCourseRouter);
 router.use("/data", memberDataRouter);
 
 module.exports = router;

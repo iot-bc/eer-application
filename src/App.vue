@@ -9,9 +9,9 @@
         >Register</router-link
       >
       |
-      <router-link to="/member">Member</router-link>
+      <router-link :to="{ name: 'Member' }">Member</router-link>
       |
-      <router-link to="/teacher">Teacher</router-link>
+      <router-link :to="{ name: 'Teacher' }">Teacher</router-link>
     </el-header>
     <router-view />
   </div>

@@ -7,7 +7,7 @@
       <el-aside width="180px">
         <side-bar></side-bar>
       </el-aside>
-      <el-main>main</el-main>
+      <el-main><router-view /></el-main>
     </el-container>
   </el-container>
 </template>
@@ -16,7 +16,7 @@
 import NavBar from "./navbar/index";
 import SideBar from "./sidebar/index";
 export default {
-  name: "Teacher-Main",
+  name: "TeacherMain",
   components: { SideBar, NavBar },
   props: {
     msg: String

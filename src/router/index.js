@@ -34,12 +34,51 @@ const routes = [
   {
     path: "/member",
     name: "Member",
-    component: () => import("@/views/member")
+    component: () => import("@/views/member"),
+    children: [
+      {
+        path: "profile",
+        name: "MemberProfile",
+        component: () => import("@/views/member/core/profile")
+      },
+      {
+        path: "device",
+        name: "MemberDevice",
+        component: () => import("@/views/member/core/device")
+      },
+      {
+        path: "courses",
+        name: "MemberCourses",
+        component: () => import("@/views/member/core/courses")
+      },
+      {
+        path: "data",
+        name: "MemberData",
+        component: () => import("@/views/member/core/data")
+      }
+    ]
   },
   {
     path: "/teacher",
     name: "Teacher",
-    component: () => import("@/views/teacher")
+    component: () => import("@/views/teacher"),
+    children: [
+      {
+        path: "profile",
+        name: "TeacherProfile",
+        component: () => import("@/views/teacher/core/profile")
+      },
+      {
+        path: "course",
+        name: "TeacherCourse",
+        component: () => import("@/views/teacher/core/course")
+      },
+      {
+        path: "member/:mid",
+        name: "TeacherMember",
+        component: () => import("@/views/teacher/core/member")
+      }
+    ]
   }
 ];
 

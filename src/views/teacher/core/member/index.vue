@@ -1,11 +1,13 @@
-<template> <div>profile</div></template>
+<template>
+  <div>member data</div>
+</template>
 
 <script>
 export default {
-  name: "TeacherProfile",
+  name: "TeacherMember",
   data() {
     return {
-      teacher_info: {},
+      member_info: {},
       member_data: {}
     };
   },
@@ -13,8 +15,8 @@ export default {
   mounted() {},
   computed: {},
   methods: {
-    get_info() {
-      this.$axios.get("/api/teacher/info").then(res => {
+    get_member_data(mid) {
+      this.$axios.get(`/api/teacher/member/${mid}`).then(res => {
         res.data;
       });
     }

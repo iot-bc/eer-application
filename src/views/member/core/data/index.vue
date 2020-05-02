@@ -1,19 +1,21 @@
-<template><div>Profile</div></template>
+<template>
+  <div>Data</div>
+</template>
 
 <script>
 export default {
-  name: "MemberProfile",
+  name: "MemberData",
   data() {
     return {
-      info: {}
+      stats: {}
     };
   },
   created() {},
   mounted() {},
   computed: {},
   methods: {
-    get_info() {
-      this.$axios.get("/api/member/info").then(res => {
+    get_data() {
+      this.$axios.get("/api/member/data").then(res => {
         res.data;
       });
     }

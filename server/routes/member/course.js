@@ -1,7 +1,7 @@
 /**
  * @Author: xyf @Ubuntu18.04
  * @Created: 2020/4/28 下午3:31
- * @Filename: teacher.js
+ * @Filename: course.js
  * @Function: do nothing >_>
  */
 

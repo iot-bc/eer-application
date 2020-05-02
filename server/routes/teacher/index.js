@@ -8,11 +8,11 @@
 const router = require("express").Router();
 
 const teacherInfoRouter = require("./info");
-const teacherMemberRouter = require("./member");
+const teacherCourseRouter = require("./course");
 const teacherDataRouter = require("./data");
 
 router.use("/info", teacherInfoRouter);
-router.use("/member", teacherMemberRouter);
+router.use("/member", teacherCourseRouter);
 router.use("/data", teacherDataRouter);
 
 module.exports = router;
