@@ -9,6 +9,12 @@
       </el-aside>
       <el-main>
         <router-view />
+        <p class="temp-link">
+          <router-link :to="{ name: 'MemberProfile' }">Profile</router-link> |
+          <router-link :to="{ name: 'MemberDevice' }">Device</router-link> |
+          <router-link :to="{ name: 'MemberCourses' }">Courses</router-link> |
+          <router-link :to="{ name: 'MemberData' }">Data</router-link>
+        </p>
       </el-main>
     </el-container>
   </el-container>
@@ -31,9 +37,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-
 .main
   border 1px solid navajowhite
   overflow-y hidden
@@ -48,4 +52,9 @@ export default {
       overflow-y hidden
     .el-main
       background-color white
+
+.temp-link
+  position absolute
+  bottom 5px
+  left 40%
 </style>

@@ -7,7 +7,16 @@
       <el-aside width="180px">
         <side-bar></side-bar>
       </el-aside>
-      <el-main><router-view /></el-main>
+      <el-main>
+        <router-view />
+        <p class="temp-link">
+          <router-link :to="{ name: 'TeacherProfile' }">Profile</router-link> |
+          <router-link :to="{ name: 'TeacherCourse' }">Course</router-link> |
+          <router-link :to="{ name: 'TeacherMember', params: { mid: 25 } }">
+            Data
+          </router-link>
+        </p>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -46,4 +55,9 @@ export default {
       overflow-y hidden
     .el-main
       background-color white
+
+.temp-link
+  position absolute
+  bottom 5px
+  left 40%
 </style>
