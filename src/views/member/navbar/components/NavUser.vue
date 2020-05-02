@@ -2,7 +2,7 @@
   <el-row :span="24" class="main-nav-user">
     <el-col :span="9">
       <el-avatar :size="56" fit="contain" :key="avatar_src">
-        <img src="../../../assets/laoge.png" alt="" />
+        <img src="../../../../assets/laoge.png" alt="" />
       </el-avatar>
     </el-col>
     <el-col :span="12">

@@ -5,9 +5,13 @@
       <router-link :to="{ name: 'Test' }">Test</router-link> |
       <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
       |
-      <router-link :to="{ name: 'Register', params: {} }">Register</router-link>
+      <router-link :to="{ name: 'Register', params: { type: 'dd' } }"
+        >Register</router-link
+      >
       |
-      <router-link to="/main">User</router-link>
+      <router-link to="/member">Member</router-link>
+      |
+      <router-link to="/teacher">Teacher</router-link>
     </el-header>
     <router-view />
   </div>
@@ -22,6 +26,6 @@
   color #2c3e50
 #header
   position absolute
-  left 0
+  left 35%
   top 0
 </style>

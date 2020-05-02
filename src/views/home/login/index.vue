@@ -48,6 +48,7 @@
           <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
         </p>
       </el-form-item>
+      {{ $route.params }}
     </el-form>
   </div>
 </template>

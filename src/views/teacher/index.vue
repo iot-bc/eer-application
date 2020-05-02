@@ -16,7 +16,7 @@
 import NavBar from "./navbar/index";
 import SideBar from "./sidebar/index";
 export default {
-  name: "Main",
+  name: "Teacher-Main",
   components: { SideBar, NavBar },
   props: {
     msg: String
