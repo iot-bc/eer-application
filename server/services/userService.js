@@ -60,7 +60,7 @@ function UserService() {
   };
 
   this.getUserInformation = function(_idUser) {
-    User.findById(encryptMethod.IDAntiEncrypt(_idUser), function(err, user) {
+    User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
       if (err) return console.err(err);
       return [_idUser, user];
     });
@@ -70,7 +70,7 @@ function UserService() {
     let device = new Device({
       deviceToken: idProducer.produceDeviceID(),
       deviceName: deviceName,
-      _idUser: encryptMethod.IDAntiEncrypt(_idUser)
+      _idUser: encryptMethod.IDDecrypt(_idUser)
     });
 
     device.save(function(err, device) {
@@ -81,7 +81,7 @@ function UserService() {
   };
 
   this.userCheckDevice = function(_idUser) {
-    Device.findOne({ _idUser: encryptMethod.IDAntiEncrypt(_idUser) }, function(
+    Device.findOne({ _idUser: encryptMethod.IDDecrypt(_idUser) }, function(
       err,
       device
     ) {
@@ -96,11 +96,12 @@ function UserService() {
     });
   };
 
+  //还需借助区块链
   this.userGetDataFromDevice = function() {};
 
   this.userCancelDevice = function(_idUser, _idDevice) {
     Device.findOneAndRemove(
-      { _idDevice: encryptMethod.IDAntiEncrypt(_idDevice) },
+      { _idDevice: encryptMethod.IDDecrypt(_idDevice) },
       function(err, device) {
         if (err) return console.err(err);
         return [_idUser, _idDevice];
@@ -122,7 +123,7 @@ function UserService() {
   this.showTeachers = function(_idMember, orgID) {
     let teacher_chosen_ids = [];
     Employment.find(
-      { _idMember: encryptMethod.IDAntiEncrypt(_idMember) },
+      { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
         if (err) return console.err(err);
@@ -171,8 +172,8 @@ function UserService() {
   this.memberUnemployTeacher = function(_idMember, _idTeacher) {
     Employment.findOneAndRemove(
       {
-        _idMember: encryptMethod.IDAntiEncrypt(_idMember),
-        _idTeacher: encryptMethod.IDAntiEncrypt(_idTeacher)
+        _idMember: encryptMethod.IDDecrypt(_idMember),
+        _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
       },
       function(err, employment) {
         if (err) return console.err(err);
@@ -182,10 +183,21 @@ function UserService() {
   };
 
   //老师查看其所带的学生
-  this.teacherCheckMembers = function(_idTeacher) {};
+  this.teacherCheckMembers = function(_idTeacher) {
+    let student_ids = [];
+    Employment.find(
+      { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
+      "_idMember",
+      function(err, ids) {
+        if (err) return console.err(err);
+        student_ids = ids;
+      }
+    );
 
-  this.teacherCheckMember = function(_idMember) {};
+    return [_idTeacher, student_ids];
+  };
 
+  //还需进行区块链相关操作
   this.teacherGetDataOfMember = function() {};
 }
 

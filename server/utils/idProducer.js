@@ -13,9 +13,7 @@ function IDproducer() {
     //     if (user) {
     //       newID = getRamdomID("Tea");
     //     }
-    //     else {
-    //       break;
-    //     }
+    //     else break;
     //   });
     // }
     return newID;
@@ -29,9 +27,7 @@ function IDproducer() {
     //     if (user) {
     //       newID = getRamdomID("Dev");
     //     }
-    //     else {
-    //       break;
-    //     }
+    //     else break;
     //   });
     // }
     return newID;
