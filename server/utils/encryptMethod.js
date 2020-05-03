@@ -1,10 +1,17 @@
 function EncryptMethod() {
   this.hashEncrypt = function(password) {
     let password_hashEncrypt = hex_md5(password);
-
-    console.log(password_hashEncrypt);
-
     return password_hashEncrypt;
+  };
+
+  this.IDEncrypt = function(_id) {
+    let _id_Encrypted = _id;
+    return _id;
+  };
+
+  this.IDAntiEncrypt = function(_id_Encrypted) {
+    let _id = _id_Encrypted;
+    return _id_Encrypted;
   };
 }
 

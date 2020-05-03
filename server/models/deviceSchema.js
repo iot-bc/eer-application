@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let deviceSchema = new Schema({
-  deviceID: {
+  deviceToken: {
     type: String,
     required: true,
     unique: true
@@ -13,23 +13,18 @@ let deviceSchema = new Schema({
     required: true
   },
 
-  userID: {
+  _idUser: {
     type: String,
     required: true
-  },
-
-  registerDate: {
-    type: Date,
-    default: Date.now()
   }
 });
 
-deviceSchema.methods.setDeviceID = function(deviceID) {
-  this.deviceID = deviceID;
+deviceSchema.methods.setDeviceToken = function(deviceToken) {
+  this.deviceToken = deviceToken;
 };
 
-deviceSchema.methods.getDeviceID = function() {
-  return this.deviceID;
+deviceSchema.methods.getDeviceToken = function() {
+  return this.deviceToken;
 };
 
 deviceSchema.methods.setDeviceName = function(deviceName) {
@@ -40,16 +35,12 @@ deviceSchema.methods.getDeviceName = function() {
   return this.deviceName;
 };
 
-deviceSchema.methods.setUserID = function(userID) {
-  this.userID = userID;
+deviceSchema.methods.set_idUser = function(_idUser) {
+  this._idUser = _idUser;
 };
 
-deviceSchema.methods.getUserID = function() {
-  return this.userID;
-};
-
-deviceSchema.methods.getRegisterDate = function() {
-  return this.registerDate;
+deviceSchema.methods.get_idUser = function() {
+  return this._idUser;
 };
 
 let Device = mongoose.model("Device", deviceSchema);
