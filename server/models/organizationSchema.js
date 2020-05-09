@@ -2,46 +2,32 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let organizationSchema = new Schema({
-  organizationID: {
+  orgID: {
     type: String,
     required: true,
     unique: true
   },
 
-  organizationName: {
+  orgName: {
     type: String,
     required: true
-  },
-
-  organizationType: {
-    type: String,
-    required: true,
-    enum: ["school", "gym"]
   }
 });
 
-organizationSchema.methods.setOrganizationID = function(organizationID) {
-  this.organizationID = organizationID;
+organizationSchema.methods.setOrgID = function(orgID) {
+  this.orgID = orgID;
 };
 
-organizationSchema.methods.getOrganizationID = function() {
-  return this.organizationID;
+organizationSchema.methods.getOrgID = function() {
+  return this.orgID;
 };
 
-organizationSchema.methods.setOrganizationName = function(organizationName) {
-  this.organizationName = organizationName;
+organizationSchema.methods.setOrgName = function(orgName) {
+  this.orgName = orgName;
 };
 
-organizationSchema.methods.getOrganizationName = function() {
-  return this.organizationName;
-};
-
-organizationSchema.methods.setOrganizationType = function(organizationType) {
-  this.organizationType = organizationType;
-};
-
-organizationSchema.methods.getOrganizationType = function() {
-  return this.organizationType;
+organizationSchema.methods.getOrgName = function() {
+  return this.orgName;
 };
 
 let Organization = mongoose.model("Organization", organizationSchema);

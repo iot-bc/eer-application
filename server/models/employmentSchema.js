@@ -2,31 +2,31 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let employmentSchema = new Schema({
-  studentID: {
+  _idMember: {
     type: String,
     required: true
   },
 
-  instructorID: {
+  _idTeacher: {
     type: String,
     required: true
   }
 });
 
-employmentSchema.methods.setStudentID = function(studentID) {
-  this.studentID = studentID;
+employmentSchema.methods.set_idMember = function(_idMember) {
+  this._idMember = _idMember;
 };
 
-employmentSchema.methods.getStudentID = function() {
-  return this.studentID;
+employmentSchema.methods.get_idMember = function() {
+  return this._idMember;
 };
 
-employmentSchema.methods.setInstructorID = function(instructorID) {
-  this.instructorID = instructorID;
+employmentSchema.methods.set_idTeacher = function(_idTeacher) {
+  this._idTeacher = _idTeacher;
 };
 
-employmentSchema.methods.getInstructorID = function() {
-  return this.instructorID;
+employmentSchema.methods.get_idTeacher = function() {
+  return this._idTeacher;
 };
 
 let Employment = mongoose.model("Employment", employmentSchema);
