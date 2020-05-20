@@ -7,20 +7,21 @@ const routes = [
   {
     path: "/",
     name: "App",
+    redirect: "/home",
     component: () => import("@/views/home"),
     children: [
       {
-        path: "/home",
+        path: "home",
         name: "Home",
         component: () => import("@/views/home/components/HomeMain.vue")
       },
       {
-        path: "/login",
+        path: "login",
         name: "Login",
         component: () => import("@/views/home/login")
       },
       {
-        path: "/register",
+        path: "register",
         name: "Register",
         component: () => import("@/views/home/login")
       }

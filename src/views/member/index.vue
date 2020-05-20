@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import NavBar from "./navbar/index";
-import SideBar from "./sidebar/index";
+import NavBar from "./navbar";
+import SideBar from "./sidebar";
 export default {
   name: "MemberMain",
   components: { SideBar, NavBar },
@@ -52,6 +52,7 @@ export default {
       overflow-y hidden
     .el-main
       background-color white
+      padding 20px 5%
 
 .temp-link
   position absolute
