@@ -32,6 +32,36 @@ class AccessControlContract extends Contract {
     console.log("Instantiate the AccessControl Contract");
   }
 
+  async addPolicy(ctx, subject, object, operation, role) {
+    let ac = AccessControl.createInstance(subject, object, operation, role);
+
+    ac.activiate();
+
+    await ctx.acList.addAccessControl(ac);
+  }
+
+  // async updatePolicy(ctx) {
+  //
+  // }
+
+  async deletePolicy(ctx, subject, object) {
+    let acKey = AccessControl.makeKey([subject, object]);
+    let ac = await ctx.acList.getAccessControl(acKey);
+
+    ac.drop();
+
+    await ctx.acList.updateAccessControl(ac);
+
+    return ac;
+  }
+
+  async checkPolicy(ctx, subject, object) {
+    let acKey = AccessControl.makeKey([subject, object]);
+    let ac = await ctx.acList.getAccessControl(acKey);
+
+    if (ac) return true;
+  }
+
   // async ...
 }
 

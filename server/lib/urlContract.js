@@ -32,6 +32,38 @@ class UniformResourceLocatorContract extends Contract {
     console.log("Instantiate the AccessControl Contract");
   }
 
+  async addUrl(ctx, owner, device, url) {
+    let _url = Url.createInstance(owner, device, url);
+
+    _url.activiate();
+
+    await ctx.urlList.addUrl(_url);
+
+    return _url;
+  }
+
+  async updateUrl(ctx, owner, device, url) {
+    let urlKey = Url.makeKey([owner, device]);
+    let _url = await ctx.urlList.getUrl(urlKey);
+
+    if (_url) {
+      _url.setUrl(url);
+      await ctx.urlList.updateUrl(_url);
+    }
+    return _url;
+  }
+
+  async deleteUrl(ctx, owner, device) {
+    let urlKey = Url.makeKey([owner, device]);
+    let _url = await ctx.urlList.getUrl(urlKey);
+
+    if (_url) {
+      _url.drop();
+      await ctx.urlList.updateUrl(_url);
+    }
+    return _url;
+  }
+
   // async ...
 }
 
