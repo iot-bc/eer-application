@@ -53,7 +53,6 @@ export default {
     .el-main
       background-color white
       padding 20px 5%
-
 .temp-link
   position absolute
   bottom 5px

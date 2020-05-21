@@ -124,7 +124,7 @@ export default {
         res.data;
       });
     },
-    select_cource(tcode) {
+    select_cource(tid, tcode) {
       this.$axios.post("/api/member/teacher", { tcode }).then(res => {
         res.data;
       });

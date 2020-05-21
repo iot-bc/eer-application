@@ -1,5 +1,12 @@
 <template>
-  <div>Data</div>
+  <div class="member-data">
+    <div v-if="hasDevice">device</div>
+    <p v-else>
+      Haven't registered your device, please click
+      <router-link :to="{ name: 'MemberDevice' }">here</router-link> to register
+      one!
+    </p>
+  </div>
 </template>
 
 <script>
@@ -7,7 +14,8 @@ export default {
   name: "MemberData",
   data() {
     return {
-      stats: {}
+      stats: {},
+      hasDevice: false
     };
   },
   created() {},
