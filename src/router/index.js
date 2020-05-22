@@ -40,22 +40,22 @@ const routes = [
       {
         path: "profile",
         name: "MemberProfile",
-        component: () => import("@/views/member/core/profile")
+        component: () => import("@/views/member/profile")
       },
       {
         path: "device",
         name: "MemberDevice",
-        component: () => import("@/views/member/core/device")
+        component: () => import("@/views/member/device")
       },
       {
         path: "courses",
         name: "MemberCourses",
-        component: () => import("@/views/member/core/courses")
+        component: () => import("@/views/member/courses")
       },
       {
         path: "data",
         name: "MemberData",
-        component: () => import("@/views/member/core/data")
+        component: () => import("@/views/member/data")
       }
     ]
   },
@@ -67,17 +67,17 @@ const routes = [
       {
         path: "profile",
         name: "TeacherProfile",
-        component: () => import("@/views/teacher/core/profile")
+        component: () => import("@/views/teacher/profile")
       },
       {
         path: "course",
         name: "TeacherCourse",
-        component: () => import("@/views/teacher/core/course")
+        component: () => import("@/views/teacher/course")
       },
       {
         path: "member/:mid",
         name: "TeacherMember",
-        component: () => import("@/views/teacher/core/member")
+        component: () => import("@/views/teacher/member")
       }
     ]
   }

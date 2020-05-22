@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import NavBar from "./navbar/index";
-import SideBar from "./sidebar/index";
+import NavBar from "../bars/navbar";
+import SideBar from "../bars/sidebar";
 export default {
   name: "TeacherMain",
   components: { SideBar, NavBar },
