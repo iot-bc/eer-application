@@ -15,11 +15,18 @@ const teacherRouter = require("./teacher");
 
 let testRouter = require("./test");
 
+function storeLocal(param) {
+  return function(req, res, next) {
+    res.locals[param] = req.params[param];
+    next();
+  };
+}
+
 router.use("/login", loginRouter);
 router.use("/register", registerRouter);
 router.use("/admin", adminRouter);
-router.use("/member", memberRouter);
-router.use("/teacher", teacherRouter);
+router.use("/member/:memberID", storeLocal("memberID"), memberRouter);
+router.use("/teacher/:teacherID", storeLocal("teacherID"), teacherRouter);
 
 router.use("/test", testRouter);
 

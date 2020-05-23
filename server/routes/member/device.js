@@ -19,8 +19,13 @@ router
     res.send({ device: "laoge's device" });
   })
   .post(function(req, res, next) {
-    if (!req.body) next();
-    res.send({ device: "laoge's device been updated", msg: req.body });
+    let mid = res.locals["memberID"];
+    if (!req.body && !mid) next(); // deviceToken
+    res.send({
+      device: "laoge's device been updated",
+      msg: req.body,
+      memberID: mid
+    });
   })
   // .put(function(req, res, next) {
   //   if (req.url === null) next();
