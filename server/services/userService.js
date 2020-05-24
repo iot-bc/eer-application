@@ -10,6 +10,8 @@ const Device = require("./../models/deviceSchema");
 const Employment = require("./../models/employmentSchema");
 const Organization = require("./../models/organizationSchema");
 
+const { Wallets, Gateway } = require("fabric-network");
+
 function UserService() {
   this.userRegister = function(userName, password, userType, orgID) {
     let isRegistered = false;
@@ -73,6 +75,8 @@ function UserService() {
       _idUser: encryptMethod.IDDecrypt(_idUser)
     });
 
+    //生成url
+
     device.save(function(err, device) {
       if (err) return console.err(err);
       console.log("save successfully");
@@ -96,12 +100,12 @@ function UserService() {
     });
   };
 
-  //还需借助区块链
+  //直接在边缘节点上获取
   this.userGetDataFromDevice = function() {};
 
   this.userCancelDevice = function(_idUser, _idDevice) {
     Device.findOneAndRemove(
-      { _idDevice: encryptMethod.IDDecrypt(_idDevice) },
+      { _id: encryptMethod.IDDecrypt(_idDevice) },
       function(err, device) {
         if (err) return console.err(err);
         return [_idUser, _idDevice];
@@ -119,8 +123,30 @@ function UserService() {
     newOrgID
   ) {};
 
+  //展示学生在组织中已经选择的老师
+  this.showTeachersChosen = function(_idMember) {
+    let teacher_chosen_ids = [];
+    Employment.find(
+      { _idMember: encryptMethod.IDDecrypt(_idMember) },
+      "_idTeacher",
+      function(err, _ids) {
+        if (err) return console.err(err);
+        teacher_chosen_ids = _ids;
+      }
+    );
+
+    let teachers_chosen = [];
+    for (let i = 0; i < teacher_chosen_ids.length; i++) {
+      User.findById(teacher_chosen_ids[i], function(err, user) {
+        teachers_chosen.push(user);
+      });
+    }
+
+    return [_idMember, teachers_chosen];
+  };
+
   //展示学生在该组织中可选的老师
-  this.showTeachers = function(_idMember, orgID) {
+  this.showTeachersNotChosen = function(_idMember, orgID) {
     let teacher_chosen_ids = [];
     Employment.find(
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
@@ -138,7 +164,6 @@ function UserService() {
     });
 
     let teachers = [];
-
     for (let i = 0; i < teachers_all.length; i++) {
       let isChosen = false;
       for (let j = 0; j < teacher_chosen_ids.length; j++) {
@@ -162,6 +187,8 @@ function UserService() {
       _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
     });
 
+    //为这位老师添加ac
+
     employment.save(function(err, employment) {
       if (err) return console.err(err);
       console.log("save successfully");
@@ -170,6 +197,8 @@ function UserService() {
   };
 
   this.memberUnemployTeacher = function(_idMember, _idTeacher) {
+    //将这条ac变为无效或者删除
+
     Employment.findOneAndRemove(
       {
         _idMember: encryptMethod.IDDecrypt(_idMember),
@@ -197,7 +226,7 @@ function UserService() {
     return [_idTeacher, student_ids];
   };
 
-  //还需进行区块链相关操作
+  //首先确定其权限是否够资格，然后再记录这个操作
   this.teacherGetDataOfMember = function() {};
 }
 

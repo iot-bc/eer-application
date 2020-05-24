@@ -16,8 +16,12 @@ router.get(
   function(req, res, next) {
     //logic process
     //第一个参数就是这个member的id，第二个参数是这个member所属组织的id
-    //得到的结果是一个[]，第一项是member的id，第二项是一个list，里面放的是很多个userSchema实体，都是该学生可以选的老师
-    let result = UserService.showTeachers(req.body.id, req.body.orgid);
+    //得到的结果是一个[]，第一项是member的id，第二项是一个list，里面放的是很多个userSchema实体，都是该学生已经选的或可以选的老师
+    let teachers_chosen = UserService.showTeachersChosen(req.body.id);
+    let teachers_not_chosen = UserService.showTeachersNotChosen(
+      req.body.id,
+      req.body.orgid
+    );
 
     if (!req.originalUrl) next();
     res.json("teachersssss");
