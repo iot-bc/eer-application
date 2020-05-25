@@ -7,27 +7,33 @@
 
 const express = require("express");
 const router = express.Router();
+const Message = require("./../utils/message");
 
-const UserService = require("./../services/userService");
+const userService = require("./../services/serviceFactory").UserService();
 
 router.post("/", function(req, res, next) {
   console.log(req.body);
-  let isSuccess = UserService.userRegister(
+  let isSuccess = userService.userRegister(
     req.body.username,
     req.body.password,
     req.body.type,
-    req.body.orgid
+    req.body.orgCode
   );
-  if (isSuccess == false) {
+  if (!isSuccess) {
     //注册失败，用户名重复
-  } else {
-    //注册成功，isSuccess的值是mongoDB为用户生成的id（经过了加密）
+    res.json(
+      new Message(false, null, `Repeated username: ${req.body.username}`)
+    );
   }
-
-  res.send({
-    resCode: true
-  });
-  // next();
+  //注册成功，isSuccess的值是mongoDB为用户生成的id（经过了加密）
+  res.json(
+    new Message(
+      true,
+      isSuccess,
+      `Register successfully, ${req.body.type} ${req.body.username}`
+    )
+  );
+  next();
 });
 
 module.exports = router;
