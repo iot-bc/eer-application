@@ -73,7 +73,7 @@ export default {
 <style lang="stylus" scoped>
 .member-device
   height 88%
-  margin-top 10%
+  margin-top 8%
   &>.device-info-box
     min-height 200px
     background black

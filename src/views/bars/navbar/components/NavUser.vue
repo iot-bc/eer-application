@@ -14,7 +14,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>Account</el-dropdown-item>
           <el-dropdown-item disabled>Settings</el-dropdown-item>
-          <el-dropdown-item divided>Logout</el-dropdown-item>
+          <el-dropdown-item @click="sign_out" divided>Logout</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
@@ -33,7 +33,12 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    sign_out() {
+      // this.$store.dispatch("setID", null);
+      // this.$router.push({ name: "Home" });
+    }
+  }
 };
 </script>
 

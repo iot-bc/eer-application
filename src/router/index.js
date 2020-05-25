@@ -7,7 +7,7 @@ const routes = [
   {
     path: "/",
     name: "App",
-    redirect: "/home",
+    redirect: { name: "Home" },
     component: () => import("@/views/home"),
     children: [
       {
@@ -35,6 +35,7 @@ const routes = [
   {
     path: "/member",
     name: "Member",
+    redirect: { name: "MemberProfile" },
     component: () => import("@/views/member"),
     children: [
       {
@@ -62,6 +63,7 @@ const routes = [
   {
     path: "/teacher",
     name: "Teacher",
+    redirect: { name: "TeacherProfile" },
     component: () => import("@/views/teacher"),
     children: [
       {

@@ -46,7 +46,8 @@ import {
   Badge,
   Popover,
   Popconfirm,
-  Tooltip
+  Tooltip,
+  Loading
 } from "element-ui";
 // Vue.prototype.$ELEMENT = { size: "small", zIndex: 3000 };
 Vue.use(Button);
@@ -62,7 +63,7 @@ useAll(Vue, [Menu, MenuItemGroup, MenuItem, Submenu]); // menu use
 useAll(Vue, [Dropdown, DropdownMenu, DropdownItem]);
 useAll(Vue, [Tabs, TabPane]); // tab use
 useAll(Vue, [Table, TableColumn]); // table use
-useAll(Vue, [Popover, Popconfirm, Tooltip]); // notice use
+useAll(Vue, [Popover, Popconfirm, Tooltip, Loading]); // notice use
 
 Vue.use(feathers, "v-icon");
 

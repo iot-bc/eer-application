@@ -1,36 +1,37 @@
 <template>
   <div id="test-div">
     <el-row>
-      <el-col :span="12"
-        ><response-handler
-          class="test-res-hd"
-          url="/api/test"
-          method="get"
-        ></response-handler
-      ></el-col>
       <el-col :span="12">
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/test"-->
+        <!--          method="get"-->
+        <!--        ></response-handler>-->
+      </el-col>
+      <el-col :span="12">
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/register"-->
+        <!--          method="post"-->
+        <!--          :payload="{ username: 'laoge', password: 123123 }"-->
+        <!--        ></response-handler>-->
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/login"-->
+        <!--          method="post"-->
+        <!--          :payload="{ username: 'laogebiss', password: 123123 }"-->
+        <!--        ></response-handler>-->
         <response-handler
           class="test-res-hd"
-          url="/api/register"
+          url="/api/member/dasd/device"
           method="post"
-          :payload="{ username: 'laoge', password: 123123 }"
+          :payload="{ deviceToken: 'dasdasdasdasda0' }"
         ></response-handler>
-        <response-handler
-          class="test-res-hd"
-          url="/api/login"
-          method="post"
-          :payload="{ username: 'laogebiss', password: 123123 }"
-        ></response-handler>
-        <response-handler
-          class="test-res-hd"
-          url="/api/device"
-          method="get"
-        ></response-handler>
-        <response-handler
-          class="test-res-hd"
-          url="/api/device/all"
-          method="get"
-        ></response-handler>
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/device/all"-->
+        <!--          method="get"-->
+        <!--        ></response-handler>-->
       </el-col>
     </el-row>
   </div>

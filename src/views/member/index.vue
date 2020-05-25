@@ -52,7 +52,7 @@ export default {
       overflow-y hidden
     .el-main
       background-color white
-      padding 20px 5%
+      padding 40px 5%
 .temp-link
   position absolute
   bottom 5px
