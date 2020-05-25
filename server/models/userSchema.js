@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let userSchema = new Schema({
   teacherCode: {
     type: String,
-    unique: true
+    unique: false
   },
 
   userName: {
