@@ -101,7 +101,7 @@ function UserService() {
   };
 
   //直接在边缘节点上获取
-  this.userGetDataFromDevice = function() {};
+  this.memberGetDataFromDevice = function() {};
 
   this.userCancelDevice = function(_idUser, _idDevice) {
     Device.findOneAndRemove(
