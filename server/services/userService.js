@@ -53,6 +53,7 @@ function UserService() {
   };
 
   this.userLogin = function(userName, password) {
+    password = encryptMethod.hashEncrypt(password);
     User.findOne({ userName: userName }, function(err, user) {
       if (err) return console.err(err);
       if (password == user.getPassword())
