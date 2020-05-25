@@ -7,8 +7,8 @@
 
 const router = require("express").Router();
 
-const UserService = require("./../services/userService");
-const UserSchema = require("./../models/userSchema");
+const UserService = require("./../../services/userService");
+const UserSchema = require("./../../models/userSchema");
 
 router.get(
   "/",

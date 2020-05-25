@@ -6,7 +6,7 @@
  */
 
 const router = require("express").Router();
-const UserService = require("./../services/userService");
+const UserService = require("./../../services/userService");
 
 router
   .route("/")
