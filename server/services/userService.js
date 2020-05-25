@@ -25,7 +25,7 @@ function UserService() {
         let user = new User({
           teacherCode: idProducer.produceTeacherID(),
           userName: userName,
-          password: encryptMethod.hashEncrypt(),
+          password: encryptMethod.hashEncrypt(password),
           userType: userType,
           orgID: orgID
         });
@@ -38,7 +38,7 @@ function UserService() {
       } else {
         let user = new User({
           userName: userName,
-          password: encryptMethod.hashEncrypt(),
+          password: encryptMethod.hashEncrypt(password),
           userType: userType,
           orgID: orgID
         });
