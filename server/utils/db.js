@@ -11,6 +11,7 @@ const URL = config.url + config.database;
 const OPTIONS = config.options;
 
 module.exports = function() {
+  mongoose.set("useCreateIndex", true);
   mongoose.connect(URL, OPTIONS);
   mongoose.connection
     .on("connected", () => {
