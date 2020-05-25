@@ -12,10 +12,7 @@ const Message = require("./../utils/message");
 const userService = require("./../services/serviceFactory").UserService();
 
 router.post("/", function(req, res, next) {
-  console.log(req.originalUrl);
-  console.log(req.body);
   let isSuccess = userService.userLogin(req.body.username, req.body.password);
-  console.log(isSuccess ? 1111 : 0);
   if (!isSuccess) {
     //登陆失败
     res.json(new Message(false, null, `Wrong password or invalid username`));

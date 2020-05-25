@@ -12,7 +12,6 @@ const Message = require("./../utils/message");
 const userService = require("./../services/serviceFactory").UserService();
 
 router.post("/", function(req, res, next) {
-  console.log(req.body);
   let isSuccess = userService.userRegister(
     req.body.username,
     req.body.password,
