@@ -7,22 +7,26 @@
 
 const express = require("express");
 const router = express.Router();
+const Message = require("./../utils/message");
 
-const UserService = require("./../services/userService");
+const userService = require("./../services/serviceFactory").UserService();
 
 router.post("/", function(req, res, next) {
-  console.log(req.body);
-  let isSuccess = UserService.userLogin(req.body.username, req.body.password);
-  if (isSuccess == false) {
+  let isSuccess = userService.userLogin(req.body.username, req.body.password);
+  if (!isSuccess) {
     //登陆失败
-  } else {
-    //登陆成功 isSuccess是一个[]，第一个项是加密过后的用户id（mongoDB为其生成的），第二个项是用户的类型
+    res.json(new Message(false, null, `Wrong password or invalid username`));
   }
+  //登陆成功 isSuccess是一个[]，第一个项是加密过后的用户id（mongoDB为其生成的），第二个项是用户的类型
+  res.json(
+    new Message(
+      true,
+      isSuccess,
+      `${isSuccess["type"]} ${req.body.username} login`
+    )
+  );
 
-  res.send({
-    resCode: true
-  });
-  // next();
+  next();
 });
 
 module.exports = router;
