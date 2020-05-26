@@ -6,7 +6,7 @@
  */
 
 const router = require("express").Router();
-const UserService = require("./../services/userServce");
+const UserService = require("./../services/userService");
 const UserSchema = require("./../models/userSchema");
 
 router.get("/", function(req, res, next) {
