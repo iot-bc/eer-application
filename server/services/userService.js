@@ -188,6 +188,8 @@ function UserService() {
 
     //为这位老师添加ac
 
+    //首先是配置文件
+
     employment.save(function(err, employment) {
       if (err) return console.err(err);
       console.log("save successfully");
