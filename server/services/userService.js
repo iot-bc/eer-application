@@ -116,6 +116,7 @@ function UserService() {
   this.memberGetDataFromDevice = function(_deviceID) {
     //通过这个url 可以获取相应设备的数据
     //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
+    _deviceID = encryptMethod.IDDecrypt(_deviceID); //看看是否需要
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
@@ -139,7 +140,17 @@ function UserService() {
     return result;
   };
 
-  this.userCancelDevice = async function(_idUser, _idDevice) {
+  this.userCancelDevice = async function(_idUser) {
+    //直接一个参数
+    let _idDevice = "";
+    await Device.findOne(
+      { _idUser: encryptMethod.IDDecrypt(_idUser) },
+      function(err, device) {
+        if (err) return console.log(err);
+        _idDevice = "" + device._id;
+      }
+    );
+
     // 在EdgeX上删除设备
     let request = require("request");
     const url = "http://120.26.172.10:48081/api/v1/device/name/" + _idDevice; // 通过id删除设备
@@ -169,65 +180,101 @@ function UserService() {
     newOrgID
   ) {};
 
-  //展示学生在组织中已经选择的老师
-  this.showTeachersChosen = async function(_idMember) {
-    let teacher_chosen_ids = [];
-    await Employment.find(
-      { _idMember: encryptMethod.IDDecrypt(_idMember) },
-      "_idTeacher",
-      function(err, _ids) {
-        if (err) teacher_chosen_ids = [];
-        else teacher_chosen_ids = _ids;
-      }
-    );
-
-    let teachers_chosen = [];
-    for (let i = 0; i < teacher_chosen_ids.length; i++) {
-      await User.findById(teacher_chosen_ids[i], function(err, user) {
-        teachers_chosen.push(user);
-      });
-    }
-    let result = [];
-    result.push(_idMember, teachers_chosen);
-    return result;
-  };
-
-  //展示学生在该组织中可选的老师
-  this.showTeachersNotChosen = async function(_idMember, orgID) {
-    let teacher_chosen_ids = [];
-    await Employment.find(
-      { _idMember: encryptMethod.IDDecrypt(_idMember) },
-      "_idTeacher",
-      function(err, _ids) {
-        if (err) teacher_chosen_ids = [];
-        else teacher_chosen_ids = _ids;
-      }
-    );
-
-    let teachers_all = [];
-    await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
-      if (err) return console.err(err);
-      teachers_all = users;
+  this.showTeachers = async function(_idMember) {
+    let orgID = "";
+    await User.findById(encryptMethod.IDDecrypt(_idMember), function(
+      err,
+      user
+    ) {
+      if (err) return console.log(err);
+      orgID = user.orgID;
     });
 
     let teachers = [];
-    for (let i = 0; i < teachers_all.length; i++) {
-      let isChosen = false;
+    await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
+      if (err) return console.log(err);
+      teachers = users;
+    });
+
+    let teacher_chosen_ids = [];
+    await Employment.find(
+      { _idMember: encryptMethod.IDDecrypt(_idMember) },
+      "_idTeacher",
+      function(err, ids) {
+        if (err) return console.log(err);
+        teacher_chosen_ids = ids;
+      }
+    );
+
+    for (let i = 0; i < teachers.length; i++) {
       for (let j = 0; j < teacher_chosen_ids.length; j++) {
-        if (teachers_all[i]._id === teacher_chosen_ids[j]) {
-          isChosen = true;
-          break;
+        if (teachers[i]._id + "" === teacher_chosen_ids[j]) {
+          teachers[i].chosen = true;
         }
       }
-
-      if (!isChosen) {
-        teachers.push(teachers_all[i]);
-      }
     }
-    let result = [];
-    result.push(_idMember, teachers);
-    return result;
+    return teachers;
   };
+
+  // //展示学生在组织中已经选择的老师
+  // this.showTeachersChosen = async function(_idMember) {
+  //   let teacher_chosen_ids = [];
+  //   await Employment.find(
+  //     { _idMember: encryptMethod.IDDecrypt(_idMember) },
+  //     "_idTeacher",
+  //     function(err, _ids) {
+  //       if (err) teacher_chosen_ids = [];
+  //       else teacher_chosen_ids = _ids;
+  //     }
+  //   );
+
+  //   let teachers_chosen = [];
+  //   for (let i = 0; i < teacher_chosen_ids.length; i++) {
+  //     await User.findById(teacher_chosen_ids[i], function(err, user) {
+  //       teachers_chosen.push(user);
+  //     });
+  //   }
+  //   let result = [];
+  //   result.push(_idMember, teachers_chosen);
+  //   return result;
+  // };
+
+  // //展示学生在该组织中可选的老师
+  // this.showTeachersNotChosen = async function(_idMember, orgID) {
+  //   let teacher_chosen_ids = [];
+  //   await Employment.find(
+  //     { _idMember: encryptMethod.IDDecrypt(_idMember) },
+  //     "_idTeacher",
+  //     function(err, _ids) {
+  //       if (err) teacher_chosen_ids = [];
+  //       else teacher_chosen_ids = _ids;
+  //     }
+  //   );
+
+  //   let teachers_all = [];
+  //   await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
+  //     if (err) return console.err(err);
+  //     teachers_all = users;
+  //   });
+
+  //   let teachers = [];
+  //   for (let i = 0; i < teachers_all.length; i++) {
+  //     let isChosen = false;
+  //     for (let j = 0; j < teacher_chosen_ids.length; j++) {
+  //       if (teachers_all[i]._id === teacher_chosen_ids[j]) {
+  //         isChosen = true;
+  //         break;
+  //       }
+  //     }
+
+  //     if (!isChosen) {
+  //       teachers.push(teachers_all[i]);
+  //     }
+  //   }
+  //   let result = [];
+  //   result.push(_idMember, teachers);
+  //   return result;
+  // };
 
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
     let employment = new Employment({
