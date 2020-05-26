@@ -15,11 +15,10 @@ router.get("/", async function(req, res, next) {
   // logic process
   //这里info是一个[]，第一项是经过加密的id，第二项是这个userSchema对象，可通过get方法拿出信息
   let info = await userService.getUserInformation(mid);
-  let data = info[1];
-  delete data._v;
-  delete data._id;
-  data["id"] = info[0];
-  res.json(new Message(true, info, ""));
+  let data = {
+    id: info[0]
+  };
+  res.json(new Message(true, data, ""));
 });
 
 module.exports = router;

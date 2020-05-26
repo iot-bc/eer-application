@@ -9,11 +9,11 @@ const router = require("express").Router();
 const userService = require("./../../services/serviceFactory").UserService();
 const Message = require("./../../utils/message");
 
-router.get("/", function(req, res, next) {
+router.get("/", async function(req, res, next) {
   let tid = res.locals["teacherID"];
   // logic process
   // id是老师的id，获得的result是一个[]，第一项是老师id，第二项是学生列表
-  let result = userService.teacherCheckMembers(tid);
+  let result = await userService.teacherCheckMembers(tid);
   res.json(new Message(true, result[1], ""));
 });
 
@@ -25,11 +25,11 @@ router.get("/", function(req, res, next) {
 //   res.json("set course successfully");
 // });
 
-router.get("/:memberID", function(req, res, next) {
+router.get("/:memberID", async function(req, res, next) {
   let mid = req.params.memberID;
   // logic process
   // info是一个[]，第二项就是获得的memberSchema实体，直接get出信息
-  let info = userService.getUserInformation(mid);
+  let info = await userService.getUserInformation(mid);
   // Todo process
   res.json(new Message(true, info, ""));
 });
