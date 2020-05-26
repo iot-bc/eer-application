@@ -1,6 +1,3 @@
-const connect = require("./../utils/db");
-connect();
-
 const User = require("./../models/userSchema");
 const Device = require("./../models/deviceSchema");
 

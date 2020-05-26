@@ -15,8 +15,8 @@ function UserService() {
     let isRegistered = false;
     let user_id = "";
     await User.findOne({ userName: userName }, function(err, user) {
-      if (err) isRegistered = false;
-      if (user) isRegistered = true;
+      if (err) console.log(err);
+      else if (user) isRegistered = true;
     });
 
     if (isRegistered === false) {
@@ -29,11 +29,8 @@ function UserService() {
           orgID: orgID
         });
 
-        await user.save(function(err, user) {
-          if (err) return console.error(err);
-          console.log("save successfully");
-          user_id = encryptMethod.IDEncrypt(user._id);
-        });
+        let _user = await user.save();
+        user_id = encryptMethod.IDEncrypt(_user._id);
       } else {
         let user = new User({
           userName: userName,
@@ -42,11 +39,8 @@ function UserService() {
           orgID: orgID
         });
 
-        await user.save(function(err, user) {
-          if (err) return console.error(err);
-          console.log("save successfully");
-          user_id = encryptMethod.IDEncrypt(user._id);
-        });
+        let _user = await user.save();
+        user_id = encryptMethod.IDEncrypt(_user._id);
       }
       return user_id;
     } else return false;
@@ -57,6 +51,7 @@ function UserService() {
     password = encryptMethod.hashEncrypt(password);
     await User.findOne({ userName: userName }, function(err, user) {
       if (err) console.log(err);
+      else if (!user) result = false;
       else if (password === user.password)
         result.push(encryptMethod.IDEncrypt(user._id), user.userType);
       else result = false;
