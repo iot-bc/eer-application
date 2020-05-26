@@ -1,5 +1,3 @@
-const connect = require("./../utils/db");
-connect();
 const EncryptMethod = require("./../utils/encryptMethod");
 const IDProducer = require("./../utils/idProducer");
 const idProducer = new IDProducer();
@@ -17,11 +15,12 @@ function UserService() {
     let isRegistered = false;
 
     User.findOne({ userName: userName }, function(err, user) {
+      if (err) isRegistered = false;
       if (user) isRegistered = true;
     });
 
-    if (isRegistered == false) {
-      if (userType == "teacher") {
+    if (isRegistered === false) {
+      if (userType === "teacher") {
         let user = new User({
           teacherCode: idProducer.produceTeacherID(),
           userName: userName,
@@ -55,8 +54,8 @@ function UserService() {
   this.userLogin = function(userName, password) {
     password = encryptMethod.hashEncrypt(password);
     User.findOne({ userName: userName }, function(err, user) {
-      if (err) return console.err(err);
-      if (password == user.getPassword())
+      if (err) return "no username";
+      if (password === user.getPassword())
         return [encryptMethod.IDEncrypt(user._id), user.getType()];
       else return false;
     });
@@ -90,14 +89,13 @@ function UserService() {
       err,
       device
     ) {
-      if (err) return console.err(err);
+      if (err) return [_idUser, "no device"];
       if (device)
         return [
           _idUser,
           encryptMethod.IDEncrypt(device._id),
           device.getDeviceName()
         ];
-      else return [_idUser, "no device"];
     });
   };
 
@@ -131,7 +129,7 @@ function UserService() {
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
-        if (err) return console.err(err);
+        if (err) return [_idMember, []];
         teacher_chosen_ids = _ids;
       }
     );
@@ -153,7 +151,7 @@ function UserService() {
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
-        if (err) return console.err(err);
+        if (err) teacher_chosen_ids = [];
         teacher_chosen_ids = _ids;
       }
     );
@@ -168,7 +166,7 @@ function UserService() {
     for (let i = 0; i < teachers_all.length; i++) {
       let isChosen = false;
       for (let j = 0; j < teacher_chosen_ids.length; j++) {
-        if (teachers_all[i]._id == teacher_chosen_ids[j]) {
+        if (teachers_all[i]._id === teacher_chosen_ids[j]) {
           isChosen = true;
           break;
         }
@@ -219,7 +217,7 @@ function UserService() {
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
-        if (err) return console.err(err);
+        if (err) return [_idTeacher, "no student"];
         student_ids = ids;
       }
     );
