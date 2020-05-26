@@ -30,7 +30,7 @@ function UserService() {
           orgID: orgID
         });
 
-        user.save(function(err, user) {
+        return user.save(function(err, user) {
           if (err) return console.error(err);
           console.log("save successfully");
           return encryptMethod.IDEncrypt(user._id);
@@ -43,7 +43,7 @@ function UserService() {
           orgID: orgID
         });
 
-        user.save(function(err, user) {
+        return user.save(function(err, user) {
           if (err) return console.error(err);
           console.log("save successfully");
           return encryptMethod.IDEncrypt(user._id);
@@ -54,16 +54,16 @@ function UserService() {
 
   this.userLogin = function(userName, password) {
     password = encryptMethod.hashEncrypt(password);
-    User.findOne({ userName: userName }, function(err, user) {
+    return User.findOne({ userName: userName }, function(err, user) {
       if (err) return "no username";
-      if (password === user.getPassword())
-        return [encryptMethod.IDEncrypt(user._id), user.getUserType()];
+      else if (password === user.password)
+        return [encryptMethod.IDEncrypt(user._id), user.userType];
       else return false;
     });
   };
 
   this.getUserInformation = function(_idUser) {
-    User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
+    return User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
       if (err) return console.err(err);
       return [_idUser, user];
     });
@@ -78,7 +78,7 @@ function UserService() {
 
     //生成url
 
-    device.save(function(err, device) {
+    return device.save(function(err, device) {
       if (err) return console.err(err);
       console.log("save successfully");
       return [_idUser, encryptMethod.IDEncrypt(device._id)];
@@ -86,25 +86,25 @@ function UserService() {
   };
 
   this.userCheckDevice = function(_idUser) {
-    Device.findOne({ _idUser: encryptMethod.IDDecrypt(_idUser) }, function(
-      err,
-      device
-    ) {
-      if (err) return [_idUser, "no device"];
-      if (device)
-        return [
-          _idUser,
-          encryptMethod.IDEncrypt(device._id),
-          device.getDeviceName()
-        ];
-    });
+    return Device.findOne(
+      { _idUser: encryptMethod.IDDecrypt(_idUser) },
+      function(err, device) {
+        if (err) return [_idUser, "no device"];
+        if (device)
+          return [
+            _idUser,
+            encryptMethod.IDEncrypt(device._id),
+            device.getDeviceName()
+          ];
+      }
+    );
   };
 
   //直接在边缘节点上获取
   this.memberGetDataFromDevice = function() {};
 
   this.userCancelDevice = function(_idUser, _idDevice) {
-    Device.findOneAndRemove(
+    return Device.findOneAndRemove(
       { _id: encryptMethod.IDDecrypt(_idDevice) },
       function(err, device) {
         if (err) return console.err(err);
@@ -191,7 +191,7 @@ function UserService() {
 
     //首先是配置文件
 
-    employment.save(function(err, employment) {
+    return employment.save(function(err, employment) {
       if (err) return console.err(err);
       console.log("save successfully");
       return _idMember;
@@ -201,7 +201,7 @@ function UserService() {
   this.memberUnemployTeacher = function(_idMember, _idTeacher) {
     //将这条ac变为无效或者删除
 
-    Employment.findOneAndRemove(
+    return Employment.findOneAndRemove(
       {
         _idMember: encryptMethod.IDDecrypt(_idMember),
         _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
