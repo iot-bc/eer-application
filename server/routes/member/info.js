@@ -16,7 +16,10 @@ router.get("/", async function(req, res, next) {
   //这里info是一个[]，第一项是经过加密的id，第二项是这个userSchema对象，可通过get方法拿出信息
   let info = await userService.getUserInformation(mid);
   let data = {
-    id: info[0]
+    id: info[0],
+    name: info[1]["userName"],
+    type: info[1]["userType"],
+    org: info[1]["orgID"]
   };
   res.json(new Message(true, data, ""));
 });

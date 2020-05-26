@@ -21,12 +21,11 @@ router.get(
       res.locals["memberID"]
     );
     // Todo 后台完成？ 合并？
-    let teachers_not_chosen = await userService.showTeachersNotChosen(
-      req.body.id,
-      req.body.orgid
-    );
-
-    res.json(new Message(true, {}, "Get teacher lists"));
+    // let teachers_not_chosen = await userService.showTeachersNotChosen(
+    //   req.body.id,
+    //   req.body.orgid
+    // );
+    res.json(new Message(true, teachers_chosen, "Get teacher lists"));
   }
 );
 

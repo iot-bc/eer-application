@@ -44,8 +44,9 @@ export default {
         confirmButtonText: "Register",
         cancelButtonText: "Cancel"
       })
-        .then(async token => {
-          let msg = await this.register_device(token);
+        .then(async obj => {
+          console.log(obj.value);
+          let msg = await this.register_device(obj.value);
           Message({
             type: "success",
             message: msg
@@ -61,7 +62,7 @@ export default {
     async register_device(token) {
       this.$axios
         .post(`/api/member/${encodeURIComponent(this.memberID)}/device`, {
-          deviceToken: this.deviceToken
+          deviceToken: token
         })
         .then(res => {
           res.data;

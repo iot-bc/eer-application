@@ -32,13 +32,13 @@ router
   .post(async function(req, res, next) {
     // 用户注册设备，得到的结果是一个[]，第一项是加密过后用户的id，第二项是加密过后设备的id（mongodb自动生成的）
     let mid = res.locals["memberID"];
-    let deviceToekn = req.body.deviceToekn;
-    let result = await userService.userRegisterDevice(mid, deviceToekn);
+    let deviceToken = req.body.deviceToken;
+    console.log(deviceToken + "++++++");
+    let result = await userService.userRegisterDevice(mid, deviceToken);
 
     if (result) {
-      res.json(new Message(true, result, ""));
-    }
-    res.json(new Message(false, result, ""));
+      return res.json(new Message(true, result, ""));
+    } else return res.json(new Message(false, result, ""));
   })
   // .put(function(req, res, next) {
   //   if (req.url === null) next();

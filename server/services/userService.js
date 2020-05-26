@@ -286,7 +286,7 @@ function postData(url, body) {
     url: url,
     method: "POST",
     json: true,
-    body: data
+    body: body
   };
   request(data, callback);
 }
