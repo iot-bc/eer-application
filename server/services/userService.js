@@ -13,7 +13,7 @@ const { Wallets, Gateway } = require("fabric-network");
 function UserService() {
   this.userRegister = async function(userName, password, userType, orgID) {
     let isRegistered = false;
-
+    let user_id = "";
     await User.findOne({ userName: userName }, function(err, user) {
       if (err) isRegistered = false;
       if (user) isRegistered = true;
@@ -29,10 +29,10 @@ function UserService() {
           orgID: orgID
         });
 
-        return user.save(function(err, user) {
+        await user.save(function(err, user) {
           if (err) return console.error(err);
           console.log("save successfully");
-          return encryptMethod.IDEncrypt(user._id);
+          user_id = encryptMethod.IDEncrypt(user._id);
         });
       } else {
         let user = new User({
@@ -42,12 +42,13 @@ function UserService() {
           orgID: orgID
         });
 
-        return user.save(function(err, user) {
+        await user.save(function(err, user) {
           if (err) return console.error(err);
           console.log("save successfully");
-          return encryptMethod.IDEncrypt(user._id);
+          user_id = encryptMethod.IDEncrypt(user._id);
         });
       }
+      return user_id;
     } else return false;
   };
 
@@ -63,14 +64,16 @@ function UserService() {
     return result;
   };
 
-  this.getUserInformation = function(_idUser) {
-    return User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
+  this.getUserInformation = async function(_idUser) {
+    let info = [];
+    await User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
       if (err) return console.err(err);
-      return [_idUser, user];
+      info.push(_idUser, user);
     });
+    return info;
   };
 
-  this.userRegisterDevice = function(_idUser, deviceName) {
+  this.userRegisterDevice = async function(_idUser, deviceName) {
     let device = new Device({
       deviceToken: idProducer.produceDeviceID(),
       deviceName: deviceName,
@@ -79,39 +82,45 @@ function UserService() {
 
     //生成url
 
-    return device.save(function(err, device) {
+    let result = [];
+    await device.save(function(err, device) {
       if (err) return console.err(err);
       console.log("save successfully");
-      return [_idUser, encryptMethod.IDEncrypt(device._id)];
+      result.push(_idUser, encryptMethod.IDEncrypt(device._id));
     });
+    return result;
   };
 
-  this.userCheckDevice = function(_idUser) {
-    return Device.findOne(
+  this.userCheckDevice = async function(_idUser) {
+    let result = [];
+    await Device.findOne(
       { _idUser: encryptMethod.IDDecrypt(_idUser) },
       function(err, device) {
-        if (err) return [_idUser, "no device"];
+        if (err) result.push(_idUser, "no device");
         if (device)
-          return [
+          result.push(
             _idUser,
             encryptMethod.IDEncrypt(device._id),
-            device.getDeviceName()
-          ];
+            device.deviceName
+          );
       }
     );
+    return result;
   };
 
   //直接在边缘节点上获取
   this.memberGetDataFromDevice = function() {};
 
-  this.userCancelDevice = function(_idUser, _idDevice) {
-    return Device.findOneAndRemove(
+  this.userCancelDevice = async function(_idUser, _idDevice) {
+    let result = [];
+    await Device.findOneAndRemove(
       { _id: encryptMethod.IDDecrypt(_idDevice) },
       function(err, device) {
         if (err) return console.err(err);
-        return [_idUser, _idDevice];
+        result.push(_idUser, _idDevice);
       }
     );
+    return result;
   };
 
   //展示学生可选的组织（不一定需要）
@@ -131,8 +140,8 @@ function UserService() {
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
-        if (err) return [_idMember, []];
-        teacher_chosen_ids = _ids;
+        if (err) teacher_chosen_ids = [];
+        else teacher_chosen_ids = _ids;
       }
     );
 
@@ -142,8 +151,9 @@ function UserService() {
         teachers_chosen.push(user);
       });
     }
-
-    return [_idMember, teachers_chosen];
+    let result = [];
+    result.push(_idMember, teachers_chosen);
+    return result;
   };
 
   //展示学生在该组织中可选的老师
@@ -154,7 +164,7 @@ function UserService() {
       "_idTeacher",
       function(err, _ids) {
         if (err) teacher_chosen_ids = [];
-        teacher_chosen_ids = _ids;
+        else teacher_chosen_ids = _ids;
       }
     );
 
@@ -178,11 +188,13 @@ function UserService() {
         teachers.push(teachers_all[i]);
       }
     }
-
-    return [_idMember, teachers];
+    let result = [];
+    result.push(_idMember, teachers);
+    return result;
   };
 
-  this.memberEmployTeacher = function(_idMember, _idTeacher) {
+  this.memberEmployTeacher = async function(_idMember, _idTeacher) {
+    let result = "";
     let employment = new Employment({
       _idMember: encryptMethod.IDEncrypt(_idMember),
       _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
@@ -192,41 +204,43 @@ function UserService() {
 
     //首先是配置文件
 
-    return employment.save(function(err, employment) {
+    await employment.save(function(err, employment) {
       if (err) return console.err(err);
       console.log("save successfully");
-      return _idMember;
+      result = _idMember;
     });
+    return result;
   };
 
-  this.memberUnemployTeacher = function(_idMember, _idTeacher) {
+  this.memberUnemployTeacher = async function(_idMember, _idTeacher) {
     //将这条ac变为无效或者删除
 
-    return Employment.findOneAndRemove(
+    let result = "";
+    await Employment.findOneAndRemove(
       {
         _idMember: encryptMethod.IDDecrypt(_idMember),
         _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
       },
       function(err, employment) {
         if (err) return console.err(err);
-        return _idMember;
+        result = _idMember;
       }
     );
+    return result;
   };
 
   //老师查看其所带的学生
   this.teacherCheckMembers = async function(_idTeacher) {
-    let student_ids = [];
+    let result = [];
     await Employment.find(
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
-        if (err) return [_idTeacher, "no student"];
-        student_ids = ids;
+        if (err) result.push(_idTeacher, "no student");
+        else result.push(_idTeacher, ids);
       }
     );
-
-    return [_idTeacher, student_ids];
+    return result;
   };
 
   //首先确定其权限是否够资格，然后再记录这个操作
