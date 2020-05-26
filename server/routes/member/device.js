@@ -15,11 +15,11 @@ router
     console.log(req.originalUrl);
     next();
   })
-  .get(async function(req, res, next) {
+  .get(function(req, res, next) {
     // logic process
     // deviceInfo是一个[]，如果用户有设备则第一项是加密后用户id，第二项是加密后设备的id（mongodb自动生成的），第三项是设备名字。
     // 反之第二项则是“no device”，无第三项
-    let deviceInfo = await userService.userCheckDevice(req.body.id);
+    let deviceInfo = userService.userCheckDevice(req.body.id);
     if (deviceInfo[1] === "no device") {
       //用户还无设备
       res.json(new Message(false, null, "No device yet"));
@@ -29,11 +29,11 @@ router
     }
     next();
   })
-  .post(async function(req, res, next) {
+  .post(function(req, res, next) {
     // 用户注册设备，得到的结果是一个[]，第一项是加密过后用户的id，第二项是加密过后设备的id（mongodb自动生成的）
     let mid = res.locals["memberID"];
     let deviceToekn = req.body.deviceToekn;
-    let result = await userService.userRegisterDevice(mid, deviceToekn);
+    let result = userService.userRegisterDevice(mid, deviceToekn);
 
     if (result) {
       res.json(new Message(true, result, ""));
@@ -44,11 +44,11 @@ router
   //   if (req.url === null) next();
   //   res.send({ device: "laoge's devicessss" });
   // })
-  .delete(async function(req, res, next) {
+  .delete(function(req, res, next) {
     //result是一个[]，第一项是用户id，第二项是设备id
     // Todo 直接删用户设备，后端找出设备; 操作成功与否判断
     let mid = res.locals["memberID"];
-    let result = await userService.userCancelDevice(mid);
+    let result = userService.userCancelDevice(mid);
 
     if (req.url === null) next();
     res.send({ device: "laoge's devicessss" });

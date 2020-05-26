@@ -1,6 +1,6 @@
 <template>
   <div class="member-data">
-    <div v-if="hasDevice">{{ info }}</div>
+    <div v-if="hasDevice">device</div>
     <p v-else>
       Haven't registered your device, please click
       <router-link :to="{ name: 'MemberDevice' }">here</router-link> to register
@@ -14,7 +14,7 @@ export default {
   name: "MemberData",
   data() {
     return {
-      info: {},
+      stats: {},
       hasDevice: false
     };
   },
@@ -24,14 +24,10 @@ export default {
     memberID: () => sessionStorage.getItem("id")
   },
   methods: {
-    async get_data() {
-      let message = await this.$axios
-        .get(`/api/member/${encodeURIComponent(this.memberID)}/data`)
-        .then(res => res.data);
-      if (message.code) {
-        this.hasDevice = true;
-        this.info = message.data;
-      } else this.hasDevice = false;
+    get_data() {
+      this.$axios.get(`/api/member/${this.memberID}/data`).then(res => {
+        res.data;
+      });
     }
   }
 };

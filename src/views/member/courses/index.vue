@@ -1,5 +1,5 @@
 <template>
-  <el-table class="member-course-table" :data="courses" style="width: 100%">
+  <el-table class="member-course-table" :data="tableData" style="width: 100%">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" size="small" class="table-hidden-form">
@@ -56,7 +56,7 @@
           v-if="scope.row.chosen"
           size="mini"
           type="primary"
-          @click="select_cource(scope.row.id)"
+          @click="handleEdit(scope.$index, scope.row)"
           :disabled="!scope.row.status"
           >Join</el-button
         >
@@ -64,7 +64,7 @@
           v-else
           size="mini"
           type="danger"
-          @click="delete_course(scope.row.id)"
+          @click="handleDelete(scope.$index, scope.row)"
           :disabled="!scope.row.status"
           >Quit</el-button
         >
@@ -78,7 +78,8 @@ export default {
   name: "MemberCourses",
   data() {
     return {
-      courses: [
+      courses: [],
+      tableData: [
         {
           id: "c001",
           teacherName: "laoge",
@@ -114,40 +115,27 @@ export default {
       ]
     };
   },
-  created() {
-    this.get_courses();
-  },
+  created() {},
   mounted() {},
   computed: {
     memberID: () => sessionStorage.getItem("id")
   },
   methods: {
     get_courses() {
-      this.$axios
-        .get(`/api/member/${encodeURIComponent(this.memberID)}/teacher`)
-        .then(res => {
-          //
-          res.data;
-        });
+      this.$axios.get(`/api/member/${this.memberID}/teacher`).then(res => {
+        res.data;
+      });
     },
-    select_cource(tid) {
+    select_cource(tid, tcode) {
       this.$axios
-        .post(
-          `/api/member/${encodeURIComponent(
-            this.memberID
-          )}/teacher/${encodeURIComponent(tid)}`
-        )
+        .post(`/api/member/${this.memberID}/teacher`, { tcode })
         .then(res => {
           res.data;
         });
     },
     delete_course(tid) {
       this.$axios
-        .delete(
-          `/api/member/${encodeURIComponent(
-            this.memberID
-          )}/teacher/${encodeURIComponent(tid)}`
-        )
+        .delete(`/api/member/${this.memberID}/teacher?id=${tid}`)
         .then(res => {
           res.data;
         });

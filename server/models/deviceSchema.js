@@ -2,12 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let deviceSchema = new Schema({
-  deviceToken: {
-    type: String,
-    required: true,
-    unique: true
-  },
-
   deviceName: {
     type: String,
     required: true
@@ -18,14 +12,6 @@ let deviceSchema = new Schema({
     required: true
   }
 });
-
-deviceSchema.methods.setDeviceToken = function(deviceToken) {
-  this.deviceToken = deviceToken;
-};
-
-deviceSchema.methods.getDeviceToken = function() {
-  return this.deviceToken;
-};
 
 deviceSchema.methods.setDeviceName = function(deviceName) {
   this.deviceName = deviceName;

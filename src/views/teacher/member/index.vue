@@ -19,11 +19,7 @@ export default {
   methods: {
     get_member_data(mid) {
       this.$axios
-        .get(
-          `/api/teacher/${encodeURIComponent(
-            this.teacherID
-          )}/member/${encodeURIComponent(mid)}`
-        )
+        .get(`/api/teacher/${this.teacherID}/member/${mid}`)
         .then(res => {
           res.data;
         });

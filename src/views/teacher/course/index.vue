@@ -42,7 +42,6 @@ export default {
   },
   created() {
     this.init_stub();
-    this.get_course();
   },
   mounted() {},
   computed: {
@@ -57,28 +56,24 @@ export default {
         name: 22
       });
     },
-    async get_course() {
-      let message = await this.$axios
-        .get(`/api/teacher/${encodeURIComponent(this.teacherID)}/course`)
-        .then(res => res.data);
-      if (message.code) {
-        message.data.forEach(member => {
-          this.memberList.push(member);
-        });
-      }
+    get_course() {
+      this.$axios.get(`/api/teacher/${this.teacherID}/course`).then(res => {
+        res.data;
+      });
     },
     set_course(tcode) {
       this.$axios
-        .post(`/api/teacher/${encodeURIComponent(this.teacherID)}/course`, {
-          tcode
-        })
+        .post(`/api/teacher/${this.teacherID}/course`, { tcode })
         .then(res => {
           res.data;
         });
     },
+    get_list() {
+      return "";
+    },
     view_data(mid) {
       this.$axios
-        .get(`/api/teacher/${encodeURIComponent(this.teacherID)}/data/${mid}`)
+        .get(`/api/teacher/${this.teacherID}/data/${mid}`)
         .then(res => {
           res.data;
         });
