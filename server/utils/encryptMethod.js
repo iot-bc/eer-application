@@ -20,7 +20,9 @@ function EncryptMethod() {
       iv: iv,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7
-    }).toString();
+    });
+
+    _id_Encrypted = _id_Encrypted.toString();
 
     return _id_Encrypted;
   };
