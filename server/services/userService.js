@@ -75,6 +75,20 @@ function UserService() {
         });
 
         //生成url
+        //注册设备
+        let device_url = "http://120.26.172.10:48081/api/v1/device";
+        let newDevice = {
+            "name":device.deviceToken,
+            "description":"负责监控和采集学生的部分生理数据和运动情况数据",
+            "adminState":"unlocked",
+            "operatingState":"enabled",
+            "protocols":{"device protocol":{"device address":"device " + device.deviceToken}},
+            "labels": ["health","counter"],
+            "location":"",
+            "service":{"name":"GraduationDesignSystem control device service"},
+            "profile":{"name":"device monitor profile"}
+        };
+        postData(device_url, newDevice);
 
         let result = [];
         let _device = await device.save();
@@ -100,7 +114,28 @@ function UserService() {
     };
 
     //直接在边缘节点上获取
-    this.memberGetDataFromDevice = function() {};
+    this.memberGetDataFromDevice = function(_deviceToken) {
+        //通过这个url 可以获取相应设备的数据
+        //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
+        const url = "http://120.26.172.10:48080/api/v1/event/device/" + _deviceToken + "/1";
+
+        let http = require('http');
+        let result = {};
+        http.get(url, function (res) {
+            let data = '';
+            res.on('data', function (d) {
+                data += d;
+            });
+            res.on('end', function () {
+                result = JSON.parse(data);
+                console.log(result);
+            });
+        }).on('error', function (e) {
+            console.error(e);
+        });
+
+        return result;
+    };
 
     this.userCancelDevice = async function(_idUser, _idDevice) {
         let result = [];
@@ -232,6 +267,25 @@ function UserService() {
 
     //首先确定其权限是否够资格，然后再记录这个操作
     this.teacherGetDataOfMember = function() {};
+}
+
+function postData(url, body) {
+    let request = require('request');
+    let data = {
+        headers: {"Connection": "close"},
+        url: url,
+        method: 'POST',
+        json:true,
+        body: data
+    };
+    request(data, callback);
+}
+
+
+function callback(error, response, data) {
+    if (!error && response.statusCode === 200) {
+        console.log('----info------',data);
+    }
 }
 
 module.exports = UserService;
