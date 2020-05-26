@@ -15,7 +15,6 @@ function UserService() {
     let isRegistered = false;
 
     await User.findOne({ userName: userName }, function(err, user) {
-      console.log(user);
       if (err) isRegistered = false;
       if (user) isRegistered = true;
     });
@@ -52,14 +51,16 @@ function UserService() {
     } else return false;
   };
 
-  this.userLogin = function(userName, password) {
+  this.userLogin = async function(userName, password) {
+    let result = [];
     password = encryptMethod.hashEncrypt(password);
-    return User.findOne({ userName: userName }, function(err, user) {
-      if (err) return "no username";
+    await User.findOne({ userName: userName }, function(err, user) {
+      if (err) console.log(err);
       else if (password === user.password)
-        return [encryptMethod.IDEncrypt(user._id), user.userType];
-      else return false;
+        result.push(encryptMethod.IDEncrypt(user._id), user.userType);
+      else result = false;
     });
+    return result;
   };
 
   this.getUserInformation = function(_idUser) {
