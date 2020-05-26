@@ -74,12 +74,12 @@ function UserService() {
     //注册设备
     let device_url = "http://120.26.172.10:48081/api/v1/device";
     let newDevice = {
-      name: device.deviceToken,
+      name: device._id,
       description: "负责监控和采集学生的部分生理数据和运动情况数据",
       adminState: "unlocked",
       operatingState: "enabled",
       protocols: {
-        "device protocol": { "device address": "device " + device.deviceToken }
+        "device protocol": { "device address": "device " + device._id }
       },
       labels: ["health", "counter"],
       location: "",
@@ -112,11 +112,11 @@ function UserService() {
   };
 
   //直接在边缘节点上获取
-  this.memberGetDataFromDevice = function(_deviceToken) {
+  this.memberGetDataFromDevice = function(_deviceID) {
     //通过这个url 可以获取相应设备的数据
     //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
     const url =
-      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceToken + "/1";
+      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
     let http = require("http");
     let result = {};
@@ -141,7 +141,7 @@ function UserService() {
   this.userCancelDevice = async function(_idUser, _idDevice) {
     // 在EdgeX上删除设备
     let request = require("request");
-    const url = "http://120.26.172.10:48081/api/v1/device/name/" + _idDevice; // 通过token删除设备
+    const url = "http://120.26.172.10:48081/api/v1/device/name/" + _idDevice; // 通过id删除设备
     let options = { url: url };
     request.del(options, function(err, response, body) {
       console.info(response.body);
