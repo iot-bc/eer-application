@@ -138,6 +138,16 @@ function UserService() {
     };
 
     this.userCancelDevice = async function(_idUser, _idDevice) {
+        // 在EdgeX上删除设备
+        let request = require("request");
+        const url = "http://120.26.172.10:48081/api/v1/device/name/" + _idDevice; // 通过token删除设备
+        let options = {url:url};
+        request.del(options, function(err, response, body){
+            console.info(response.body);
+        });
+
+
+
         let result = [];
         await Device.findOneAndRemove(
             { _id: encryptMethod.IDDecrypt(_idDevice) },
