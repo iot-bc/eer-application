@@ -86,12 +86,20 @@ export default {
         duration: 3000
       });
       if (data.code) {
+        let id = data.data[0];
+        let type = data.data[1];
         await this.$store.dispatch("login", {
-          id: data.data[0],
+          id: id,
           name: this.username,
-          type: data.data[1]
+          type: type
         });
-        setTimeout(() => this.$router.push({ name: "Member" }), 1000);
+        setTimeout(
+          () =>
+            this.$router.push({
+              name: type.replace(type[0], type[0].toUpperCase())
+            }),
+          1000
+        );
       }
     },
     async register() {
