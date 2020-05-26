@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let userSchema = new Schema({
-  teacherCode: {
-    type: String,
-    unique: false
-  },
-
   userName: {
     type: String,
     required: true,
@@ -28,14 +23,6 @@ let userSchema = new Schema({
     type: String
   }
 });
-
-userSchema.methods.setTeacherCode = function(teacherCode) {
-  this.teacherCode = teacherCode;
-};
-
-userSchema.methods.getTeacherCode = function() {
-  return this.teacherCode;
-};
 
 userSchema.methods.setUserName = function(userName) {
   this.userName = userName;
