@@ -29,11 +29,8 @@ function UserService() {
                     orgID: orgID
                 });
 
-                await user.save(function(err, user) {
-                    if (err) return console.error(err);
-                    console.log("save successfully");
-                    user_id = encryptMethod.IDEncrypt(user._id);
-                });
+                let _user = await user.save();
+                user_id = encryptMethod.IDEncrypt(_user._id);
             } else {
                 let user = new User({
                     userName: userName,
@@ -42,11 +39,8 @@ function UserService() {
                     orgID: orgID
                 });
 
-                await user.save(function(err, user) {
-                    if (err) return console.error(err);
-                    console.log("save successfully");
-                    user_id = encryptMethod.IDEncrypt(user._id);
-                });
+                let _user = await user.save();
+                user_id = encryptMethod.IDEncrypt(_user._id);
             }
             return user_id;
         } else return false;
@@ -80,28 +74,11 @@ function UserService() {
             _idUser: encryptMethod.IDDecrypt(_idUser)
         });
 
-        //注册设备
-        let device_url = "http://120.26.172.10:48081/api/v1/device";
-        let newDevice = {
-            "name":device.deviceToken,
-            "description":"负责监控和采集学生的部分生理数据和运动情况数据",
-            "adminState":"unlocked",
-            "operatingState":"enabled",
-            "protocols":{"device protocol":{"device address":"device " + device.deviceToken}},
-            "labels": ["health","counter"],
-            "location":"",
-            "service":{"name":"GraduationDesignSystem control device service"},
-            "profile":{"name":"device monitor profile"}
-        };
-        postData(device_url, newDevice);
-
+        //生成url
 
         let result = [];
-        await device.save(function(err, device) {
-            if (err) return console.err(err);
-            console.log("save successfully");
-            result.push(_idUser, encryptMethod.IDEncrypt(device._id));
-        });
+        let _device = await device.save();
+        result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
         return result;
     };
 
@@ -123,29 +100,7 @@ function UserService() {
     };
 
     //直接在边缘节点上获取
-    this.memberGetDataFromDevice = function(_deviceToken) {
-
-        //通过这个url 可以获取相应设备的数据
-        //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
-        const url = "http://120.26.172.10:48080/api/v1/event/device/" + _deviceToken + "/1";
-
-        let http = require('http');
-        let result = {};
-        http.get(url, function (res) {
-            let data = '';
-            res.on('data', function (d) {
-                data += d;
-            });
-            res.on('end', function () {
-                result = JSON.parse(data);
-                console.log(result);
-            });
-        }).on('error', function (e) {
-            console.error(e);
-        });
-
-        return result;
-    };
+    this.memberGetDataFromDevice = function() {};
 
     this.userCancelDevice = async function(_idUser, _idDevice) {
         let result = [];
@@ -230,7 +185,6 @@ function UserService() {
     };
 
     this.memberEmployTeacher = async function(_idMember, _idTeacher) {
-        let result = "";
         let employment = new Employment({
             _idMember: encryptMethod.IDEncrypt(_idMember),
             _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
@@ -240,11 +194,8 @@ function UserService() {
 
         //首先是配置文件
 
-        await employment.save(function(err, employment) {
-            if (err) return console.err(err);
-            console.log("save successfully");
-            result = _idMember;
-        });
+        let _employment = await employment.save();
+        let result = _idMember;
         return result;
     };
 
@@ -281,26 +232,6 @@ function UserService() {
 
     //首先确定其权限是否够资格，然后再记录这个操作
     this.teacherGetDataOfMember = function() {};
-}
-
-
-function postData(url, body) {
-    let request = require('request');
-    let data = {
-        headers: {"Connection": "close"},
-        url: url,
-        method: 'POST',
-        json:true,
-        body: data
-    };
-    request(data, callback);
-}
-
-
-function callback(error, response, data) {
-    if (!error && response.statusCode === 200) {
-        console.log('----info------',data);
-    }
 }
 
 module.exports = UserService;
