@@ -9,12 +9,12 @@
       </el-aside>
       <el-main>
         <router-view />
-        <p class="temp-link">
-          <router-link :to="{ name: 'MemberProfile' }">Profile</router-link> |
-          <router-link :to="{ name: 'MemberDevice' }">Device</router-link> |
-          <router-link :to="{ name: 'MemberCourses' }">Courses</router-link> |
-          <router-link :to="{ name: 'MemberData' }">Data</router-link>
-        </p>
+        <!--        <p class="temp-link">-->
+        <!--          <router-link :to="{ name: 'MemberProfile' }">Profile</router-link> |-->
+        <!--          <router-link :to="{ name: 'MemberDevice' }">Device</router-link> |-->
+        <!--          <router-link :to="{ name: 'MemberCourses' }">Courses</router-link> |-->
+        <!--          <router-link :to="{ name: 'MemberData' }">Data</router-link>-->
+        <!--        </p>-->
       </el-main>
     </el-container>
   </el-container>

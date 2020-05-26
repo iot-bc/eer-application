@@ -1,5 +1,7 @@
 <template>
   <div class="member-device">
+    <h1>Device</h1>
+    <el-divider />
     <div class="device-info-box" v-if="hasDevice">
       device。。。
     </div>
@@ -81,8 +83,18 @@ export default {
 
 <style lang="stylus" scoped>
 .member-device
-  height 88%
-  margin-top 8%
+  height 100%
+  width 100%
+  &>h1
+    margin 0
+    width 100%
+    text-align left
+    left 0
+    font-size 32px
+    line-height 32px
+    font-weight 400
+  &>.el-divider
+    margin 16px 0 32px
   &>.device-info-box
     min-height 200px
     background black
@@ -95,7 +107,7 @@ export default {
       font-size 240px
       line-height @font-size
       margin-top 50px
-      margin-bottom 10px
+      margin-bottom 20px
     &>p
       font-size 28px
       text-decoration underline
