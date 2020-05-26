@@ -25,7 +25,15 @@ function storeLocal(param) {
 router.use("/login", loginRouter);
 router.use("/register", registerRouter);
 router.use("/admin", adminRouter);
-router.use("/member/:memberID", storeLocal("memberID"), memberRouter);
+router.use(
+  "/member/:memberID",
+  function(req, res, next) {
+    console.log("      +++ " + req.url);
+    next();
+  },
+  storeLocal("memberID"),
+  memberRouter
+);
 router.use("/teacher/:teacherID", storeLocal("teacherID"), teacherRouter);
 
 router.use("/test", testRouter);

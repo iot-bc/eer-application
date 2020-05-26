@@ -1,4 +1,6 @@
-<template><div>Profile</div></template>
+<template
+  ><div>{{ info }}</div></template
+>
 
 <script>
 export default {
@@ -8,7 +10,9 @@ export default {
       info: {}
     };
   },
-  created() {},
+  created() {
+    this.get_info();
+  },
   mounted() {},
   computed: {
     memberID() {
@@ -17,9 +21,11 @@ export default {
   },
   methods: {
     get_info() {
-      this.$axios.get(`/api/member/${this.memberID}/info`).then(res => {
-        this.info = res.data;
-      });
+      this.$axios
+        .get(`/api/member/${encodeURIComponent(this.memberID)}/info`)
+        .then(res => {
+          this.info = res.data;
+        });
     }
   }
 };
