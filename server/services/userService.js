@@ -29,11 +29,8 @@ function UserService() {
           orgID: orgID
         });
 
-        await user.save(function(err, user) {
-          if (err) return console.error(err);
-          console.log("save successfully");
-          user_id = encryptMethod.IDEncrypt(user._id);
-        });
+        let _user = await user.save();
+        user_id = encryptMethod.IDEncrypt(_user._id);
       } else {
         let user = new User({
           userName: userName,
@@ -42,11 +39,8 @@ function UserService() {
           orgID: orgID
         });
 
-        await user.save(function(err, user) {
-          if (err) return console.error(err);
-          console.log("save successfully");
-          user_id = encryptMethod.IDEncrypt(user._id);
-        });
+        let _user = await user.save();
+        user_id = encryptMethod.IDEncrypt(_user._id);
       }
       return user_id;
     } else return false;
@@ -83,11 +77,8 @@ function UserService() {
     //生成url
 
     let result = [];
-    await device.save(function(err, device) {
-      if (err) return console.err(err);
-      console.log("save successfully");
-      result.push(_idUser, encryptMethod.IDEncrypt(device._id));
-    });
+    let _device = await device.save();
+    result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
     return result;
   };
 
@@ -194,7 +185,6 @@ function UserService() {
   };
 
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
-    let result = "";
     let employment = new Employment({
       _idMember: encryptMethod.IDEncrypt(_idMember),
       _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
@@ -204,11 +194,8 @@ function UserService() {
 
     //首先是配置文件
 
-    await employment.save(function(err, employment) {
-      if (err) return console.err(err);
-      console.log("save successfully");
-      result = _idMember;
-    });
+    let _employment = await employment.save();
+    let result = _idMember;
     return result;
   };
 
