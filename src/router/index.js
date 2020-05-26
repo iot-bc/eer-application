@@ -41,22 +41,38 @@ const routes = [
       {
         path: "profile",
         name: "MemberProfile",
-        component: () => import("@/views/member/profile")
+        component: () => import("@/views/member/profile"),
+        meta: {
+          isLogin: true,
+          type: "member"
+        }
       },
       {
         path: "device",
         name: "MemberDevice",
-        component: () => import("@/views/member/device")
+        component: () => import("@/views/member/device"),
+        meta: {
+          isLogin: true,
+          type: "member"
+        }
       },
       {
         path: "courses",
         name: "MemberCourses",
-        component: () => import("@/views/member/courses")
+        component: () => import("@/views/member/courses"),
+        meta: {
+          isLogin: true,
+          type: "member"
+        }
       },
       {
         path: "data",
         name: "MemberData",
-        component: () => import("@/views/member/data")
+        component: () => import("@/views/member/data"),
+        meta: {
+          isLogin: true,
+          type: "member"
+        }
       }
     ]
   },
@@ -69,17 +85,29 @@ const routes = [
       {
         path: "profile",
         name: "TeacherProfile",
-        component: () => import("@/views/teacher/profile")
+        component: () => import("@/views/teacher/profile"),
+        meta: {
+          isLogin: true,
+          type: "teacher"
+        }
       },
       {
         path: "course",
         name: "TeacherCourse",
-        component: () => import("@/views/teacher/course")
+        component: () => import("@/views/teacher/course"),
+        meta: {
+          isLogin: true,
+          type: "teacher"
+        }
       },
       {
         path: "member/:mid",
         name: "TeacherMember",
-        component: () => import("@/views/teacher/member")
+        component: () => import("@/views/teacher/member"),
+        meta: {
+          isLogin: true,
+          type: "teacher"
+        }
       }
     ]
   }
@@ -90,5 +118,40 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.isLogin) {
+    if (sessionStorage.getItem("login")) {
+      let type = sessionStorage.getItem("type");
+      if (type !== to.path.split("/")[1]) {
+        alert("Not allowed to visit this page");
+        next(false);
+      } else next();
+    } else {
+      alert("You need to login fisrt!");
+      next(false);
+    }
+  } else next();
+});
+// router.beforeEach((to,from,next)=>{
+//   if(to.meta.isLogin){
+//     let type = sessionStorage.getItem('userType');
+//     if(to.meta.type===type){
+//       if(to.meta.isVerified){
+//         let vertification = sessionStorage.getItem('vertification');
+//         if(vertification==='AFTER_VERTIFICATION'){
+//           next();
+//         }
+//         else {
+//           alert('Not Verified yet! You cannot try that part');
+//           next(false);
+//         }
+//       }
+//       else next();
+//     }
+//     else next({name: 'noAccess'});
+//   }
+//   else next();
+// });
 
 export default router;
