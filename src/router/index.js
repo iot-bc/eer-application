@@ -121,7 +121,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.isLogin) {
-    if (sessionStorage.getItem("login")) {
+    if (sessionStorage.getItem("login") === "TRUE") {
       let type = sessionStorage.getItem("type");
       if (type !== to.path.split("/")[1]) {
         alert("Not allowed to visit this page");
@@ -133,25 +133,5 @@ router.beforeEach((to, from, next) => {
     }
   } else next();
 });
-// router.beforeEach((to,from,next)=>{
-//   if(to.meta.isLogin){
-//     let type = sessionStorage.getItem('userType');
-//     if(to.meta.type===type){
-//       if(to.meta.isVerified){
-//         let vertification = sessionStorage.getItem('vertification');
-//         if(vertification==='AFTER_VERTIFICATION'){
-//           next();
-//         }
-//         else {
-//           alert('Not Verified yet! You cannot try that part');
-//           next(false);
-//         }
-//       }
-//       else next();
-//     }
-//     else next({name: 'noAccess'});
-//   }
-//   else next();
-// });
 
 export default router;
