@@ -11,10 +11,11 @@ const Organization = require("./../models/organizationSchema");
 const { Wallets, Gateway } = require("fabric-network");
 
 function UserService() {
-  this.userRegister = function(userName, password, userType, orgID) {
+  this.userRegister = async function(userName, password, userType, orgID) {
     let isRegistered = false;
 
-    User.findOne({ userName: userName }, function(err, user) {
+    await User.findOne({ userName: userName }, function(err, user) {
+      console.log(user);
       if (err) isRegistered = false;
       if (user) isRegistered = true;
     });
