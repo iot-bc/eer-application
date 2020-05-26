@@ -33,9 +33,11 @@ export default {
   },
   methods: {
     get_device() {
-      this.$axios.get(`/api/member/${this.memberID}/device`).then(res => {
-        res.data;
-      });
+      this.$axios
+        .get(`/api/member/${encodeURIComponent(this.memberID)}/device`)
+        .then(res => {
+          res.data;
+        });
     },
     add_device() {
       MessageBox.prompt("Input device token: ", "提示", {
@@ -58,7 +60,7 @@ export default {
     },
     async register_device(token) {
       this.$axios
-        .post(`/api/member/${this.memberID}/device`, {
+        .post(`/api/member/${encodeURIComponent(this.memberID)}/device`, {
           deviceToken: this.deviceToken
         })
         .then(res => {
@@ -66,9 +68,11 @@ export default {
         });
     },
     delete_device() {
-      this.$axios.delete(`/api/member/${this.memberID}/device`).then(res => {
-        res.data;
-      });
+      this.$axios
+        .delete(`/api/member/${encodeURIComponent(this.memberID)}/device`)
+        .then(res => {
+          res.data;
+        });
     }
   }
 };

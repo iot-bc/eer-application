@@ -13,8 +13,8 @@ function UserService() {
     let isRegistered = false;
     let user_id = "";
     await User.findOne({ userName: userName }, function(err, user) {
-      if (err) isRegistered = false;
-      if (user) isRegistered = true;
+      if (err) console.log(err);
+      else if (user) isRegistered = true;
     });
 
     if (isRegistered === false) {
@@ -48,6 +48,7 @@ function UserService() {
     password = encryptMethod.hashEncrypt(password);
     await User.findOne({ userName: userName }, function(err, user) {
       if (err) console.log(err);
+      else if (!user) result = false;
       else if (password === user.password)
         result.push(encryptMethod.IDEncrypt(user._id), user.userType);
       else result = false;
