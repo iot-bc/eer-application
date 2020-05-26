@@ -79,21 +79,19 @@ export default {
           password: this.password
         })
         .then(res => res.data);
-      if (data.resCode) {
-        Notification({
-          title: "Login",
-          message: "Success",
-          type: "success",
-          duration: 3000
+      Notification({
+        title: "Login",
+        message: data.msg,
+        type: data.code ? "success" : "error",
+        duration: 3000
+      });
+      if (data.code) {
+        await this.$store.dispatch("login", {
+          id: data.data[0],
+          name: this.username,
+          type: data.data[1]
         });
         setTimeout(() => this.$router.push({ name: "Member" }), 1000);
-      } else {
-        Notification({
-          title: "Login",
-          message: data.msg,
-          type: "error",
-          duration: 3000
-        });
       }
     },
     async register() {
@@ -101,25 +99,19 @@ export default {
         .post("/api/register", {
           username: this.username,
           password: this.password,
-          type: this.select,
+          type: this.select.toLowerCase(),
           orgCode: this.orgCode
         })
         .then(res => res.data);
-      if (data.resCode) {
-        Notification({
-          title: "Register",
-          message: "Success",
-          type: "success",
-          duration: 3000
-        });
+      Notification({
+        title: "Register",
+        message: data.msg,
+        type: data.code ? "success" : "error",
+        duration: 3000
+      });
+      if (data.code) {
+        // cookie
         setTimeout(() => this.$router.push({ name: "Login" }), 1500);
-      } else {
-        Notification({
-          title: "Register",
-          message: data.msg,
-          type: "error",
-          duration: 3000
-        });
       }
     }
   }

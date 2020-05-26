@@ -28,10 +28,12 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    memberID: () => sessionStorage.getItem("id")
+  },
   methods: {
     get_device() {
-      this.$axios.get("/api/member/device").then(res => {
+      this.$axios.get(`/api/member/${this.memberID}/device`).then(res => {
         res.data;
       });
     },
@@ -56,13 +58,15 @@ export default {
     },
     async register_device(token) {
       this.$axios
-        .post("/api/member/device", { address: this.deviceAddress })
+        .post(`/api/member/${this.memberID}/device`, {
+          deviceToken: this.deviceToken
+        })
         .then(res => {
           res.data;
         });
     },
     delete_device() {
-      this.$axios.delete("/api/member/device").then(res => {
+      this.$axios.delete(`/api/member/${this.memberID}/device`).then(res => {
         res.data;
       });
     }

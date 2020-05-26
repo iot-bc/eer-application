@@ -11,10 +11,12 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    teacherID: () => sessionStorage.getItem("id")
+  },
   methods: {
     get_info() {
-      this.$axios.get("/api/teacher/info").then(res => {
+      this.$axios.get(`/api/teacher/${this.teacherID}/info`).then(res => {
         res.data;
       });
     }

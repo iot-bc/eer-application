@@ -2,6 +2,18 @@
   <div id="test-div">
     <el-row>
       <el-col :span="12">
+        <response-handler
+          class="test-res-hd"
+          url="/api/login"
+          method="post"
+          :payload="{ username: 'laoge', password: '111' }"
+        ></response-handler>
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/register"-->
+        <!--          method="post"-->
+        <!--          :payload="{ username:'laoge1', password:'111',type:'member', orgCode:1 }"-->
+        <!--        ></response-handler>-->
         <!--        <response-handler-->
         <!--          class="test-res-hd"-->
         <!--          url="/api/test"-->
@@ -21,12 +33,12 @@
         <!--          method="post"-->
         <!--          :payload="{ username: 'laogebiss', password: 123123 }"-->
         <!--        ></response-handler>-->
-        <response-handler
-          class="test-res-hd"
-          url="/api/member/dasd/device"
-          method="post"
-          :payload="{ deviceToken: 'dasdasdasdasda0' }"
-        ></response-handler>
+        <!--        <response-handler-->
+        <!--          class="test-res-hd"-->
+        <!--          url="/api/member/dasd/device"-->
+        <!--          method="post"-->
+        <!--          :payload="{ deviceToken: 'dasdasdasdasda0' }"-->
+        <!--        ></response-handler>-->
         <!--        <response-handler-->
         <!--          class="test-res-hd"-->
         <!--          url="/api/device/all"-->

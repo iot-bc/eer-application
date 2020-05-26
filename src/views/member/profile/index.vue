@@ -10,11 +10,15 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    memberID() {
+      return sessionStorage.getItem("id");
+    }
+  },
   methods: {
     get_info() {
-      this.$axios.get("/api/member/info").then(res => {
-        res.data;
+      this.$axios.get(`/api/member/${this.memberID}/info`).then(res => {
+        this.info = res.data;
       });
     }
   }

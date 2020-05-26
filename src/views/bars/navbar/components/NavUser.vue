@@ -6,15 +6,15 @@
       </el-avatar>
     </el-col>
     <el-col :span="12">
-      <el-dropdown>
+      <el-dropdown @command="handleCommmand">
         <span class="el-dropdown-link">
-          <code>{{ username }}</code>
+          <code>{{ userName }}</code>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>Account</el-dropdown-item>
           <el-dropdown-item disabled>Settings</el-dropdown-item>
-          <el-dropdown-item @click="sign_out" divided>Logout</el-dropdown-item>
+          <el-dropdown-item command="logout" divided>Logout</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
@@ -22,21 +22,35 @@
 </template>
 
 <script>
+import { Notification } from "element-ui";
 export default {
   name: "NavUser",
   data() {
     return {
-      username: "laoge11",
       avatar_src:
         "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
     };
   },
   created() {},
   mounted() {},
+  computed: {
+    userName: () => sessionStorage.getItem("name"),
+    userID: () => sessionStorage.getItem("id")
+  },
   methods: {
+    handleCommmand(command) {
+      if (command === "logout") this.sign_out();
+    },
     sign_out() {
-      // this.$store.dispatch("setID", null);
-      // this.$router.push({ name: "Home" });
+      // this.$axios.post()
+      this.$store.dispatch("logout");
+      Notification({
+        title: "Logout",
+        message: "Back to homepage",
+        type: "warning",
+        duration: 3000
+      });
+      setTimeout(() => this.$router.push({ name: "Home" }), 1000);
     }
   }
 };

@@ -13,12 +13,16 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    teacherID: () => sessionStorage.getItem("id")
+  },
   methods: {
     get_member_data(mid) {
-      this.$axios.get(`/api/teacher/member/${mid}`).then(res => {
-        res.data;
-      });
+      this.$axios
+        .get(`/api/teacher/${this.teacherID}/member/${mid}`)
+        .then(res => {
+          res.data;
+        });
     }
   }
 };

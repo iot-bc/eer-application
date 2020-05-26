@@ -117,22 +117,28 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    memberID: () => sessionStorage.getItem("id")
+  },
   methods: {
     get_courses() {
-      this.$axios.get("/api/member/teacher").then(res => {
+      this.$axios.get(`/api/member/${this.memberID}/teacher`).then(res => {
         res.data;
       });
     },
     select_cource(tid, tcode) {
-      this.$axios.post("/api/member/teacher", { tcode }).then(res => {
-        res.data;
-      });
+      this.$axios
+        .post(`/api/member/${this.memberID}/teacher`, { tcode })
+        .then(res => {
+          res.data;
+        });
     },
     delete_course(tid) {
-      this.$axios.delete(`/api/member/teacher?id=${tid}`).then(res => {
-        res.data;
-      });
+      this.$axios
+        .delete(`/api/member/${this.memberID}/teacher?id=${tid}`)
+        .then(res => {
+          res.data;
+        });
     }
   }
 };

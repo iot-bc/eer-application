@@ -57,9 +57,10 @@ export default {
   },
   mounted() {},
   computed: {
-    messages_len: function() {
+    messages_len() {
       return this.messages.length;
-    }
+    },
+    userID: () => sessionStorage.getItem("id")
   },
   methods: {
     getMessage() {

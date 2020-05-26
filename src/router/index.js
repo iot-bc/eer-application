@@ -131,7 +131,12 @@ router.beforeEach((to, from, next) => {
       alert("You need to login fisrt!");
       next(false);
     }
-  } else next();
+  } else {
+    if (sessionStorage.getItem("login") === "TRUE") {
+      let type = sessionStorage.getItem("type").toLocaleUpperCase();
+      next({ name: type.replace(type[0], type[0].toUpperCase()) });
+    } else next();
+  }
 });
 
 export default router;

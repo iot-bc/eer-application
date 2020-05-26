@@ -20,10 +20,12 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    memberID: () => sessionStorage.getItem("id")
+  },
   methods: {
     get_data() {
-      this.$axios.get("/api/member/data").then(res => {
+      this.$axios.get(`/api/member/${this.memberID}/data`).then(res => {
         res.data;
       });
     }

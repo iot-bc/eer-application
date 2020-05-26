@@ -19,15 +19,15 @@ export default new Vuex.Store({
     getSessionID: state => state.sessionID
   },
   mutations: {
-    login: (state, id, name, type) => {
-      if (id && type && name) {
-        state.id = id;
-        state.name = name;
-        state.type = type;
+    login: (state, payload) => {
+      if (payload.id && payload.type && payload.name) {
+        state.id = payload.id;
+        state.name = payload.name;
+        state.type = payload.type;
         state.login = true;
-        sessionStorage.setItem("id", id);
-        sessionStorage.setItem("name", name);
-        sessionStorage.setItem("type", type);
+        sessionStorage.setItem("id", payload.id);
+        sessionStorage.setItem("name", payload.name);
+        sessionStorage.setItem("type", payload.type);
         sessionStorage.setItem("login", "TRUE");
       }
     },
@@ -44,8 +44,8 @@ export default new Vuex.Store({
     logout: ({ commit }) => {
       commit("logout");
     },
-    login: ({ commit }, id, name, type) => {
-      commit("login", id, name, type);
+    login: ({ commit }, payload) => {
+      commit("login", payload);
     }
   },
   modules: {}
