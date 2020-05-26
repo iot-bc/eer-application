@@ -9,6 +9,7 @@ function EncryptMethod() {
 
   //这里ID的加密运用AES加密方法，可逆，可以加密然后解密
   this.IDEncrypt = function(_id) {
+    _id = _id + "";
     let key = "0123456789abcdef";
     let iv = "0123456789abcdef";
 

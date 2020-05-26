@@ -57,7 +57,7 @@ function UserService() {
     User.findOne({ userName: userName }, function(err, user) {
       if (err) return "no username";
       if (password === user.getPassword())
-        return [encryptMethod.IDEncrypt(user._id), user.getType()];
+        return [encryptMethod.IDEncrypt(user._id), user.getUserType()];
       else return false;
     });
   };
@@ -124,9 +124,9 @@ function UserService() {
   ) {};
 
   //展示学生在组织中已经选择的老师
-  this.showTeachersChosen = function(_idMember) {
+  this.showTeachersChosen = async function(_idMember) {
     let teacher_chosen_ids = [];
-    Employment.find(
+    await Employment.find(
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
@@ -137,7 +137,7 @@ function UserService() {
 
     let teachers_chosen = [];
     for (let i = 0; i < teacher_chosen_ids.length; i++) {
-      User.findById(teacher_chosen_ids[i], function(err, user) {
+      await User.findById(teacher_chosen_ids[i], function(err, user) {
         teachers_chosen.push(user);
       });
     }
@@ -146,9 +146,9 @@ function UserService() {
   };
 
   //展示学生在该组织中可选的老师
-  this.showTeachersNotChosen = function(_idMember, orgID) {
+  this.showTeachersNotChosen = async function(_idMember, orgID) {
     let teacher_chosen_ids = [];
-    Employment.find(
+    await Employment.find(
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
       "_idTeacher",
       function(err, _ids) {
@@ -158,7 +158,7 @@ function UserService() {
     );
 
     let teachers_all = [];
-    User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
+    await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
       if (err) return console.err(err);
       teachers_all = users;
     });
@@ -214,9 +214,9 @@ function UserService() {
   };
 
   //老师查看其所带的学生
-  this.teacherCheckMembers = function(_idTeacher) {
+  this.teacherCheckMembers = async function(_idTeacher) {
     let student_ids = [];
-    Employment.find(
+    await Employment.find(
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
