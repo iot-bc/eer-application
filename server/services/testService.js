@@ -32,8 +32,8 @@ User.findOne({ userName: "testUser2" }, function(err, user) {
 
   var encrypted = CryptoJS.AES.encrypt(id, key, {
     iv: iv,
-    mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    mode: CryptoJS.mode.CTR,
+    padding: CryptoJS.pad.Iso10126
   });
 
   // 转换为字符串
@@ -45,8 +45,8 @@ User.findOne({ userName: "testUser2" }, function(err, user) {
   // 解密
   var decrypted = CryptoJS.AES.decrypt(encrypted, key, {
     iv: iv,
-    mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    mode: CryptoJS.mode.CTR,
+    padding: CryptoJS.pad.Iso10126
   });
 
   // 转换为 utf8 字符串

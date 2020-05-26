@@ -78,11 +78,8 @@ function UserService() {
     //生成url
 
     let result = [];
-    await device.save(function(err, device) {
-      if (err) return console.err(err);
-      console.log("save successfully");
-      result.push(_idUser, encryptMethod.IDEncrypt(device._id));
-    });
+    let _device = await device.save();
+    result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
     return result;
   };
 
@@ -189,7 +186,6 @@ function UserService() {
   };
 
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
-    let result = "";
     let employment = new Employment({
       _idMember: encryptMethod.IDEncrypt(_idMember),
       _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
@@ -199,11 +195,8 @@ function UserService() {
 
     //首先是配置文件
 
-    await employment.save(function(err, employment) {
-      if (err) return console.err(err);
-      console.log("save successfully");
-      result = _idMember;
-    });
+    let _employment = await employment.save();
+    let result = _idMember;
     return result;
   };
 
