@@ -105,7 +105,8 @@ function UserService() {
           result.push(
             _idUser,
             encryptMethod.IDEncrypt(device._id),
-            device.deviceName
+            device.deviceName,
+            device.date
           );
       }
     );
@@ -293,7 +294,7 @@ function UserService() {
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
     let employment = new Employment({
       _idMember: encryptMethod.IDDecrypt(_idMember),
-      _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
+      _idTeacher: _idTeacher
     });
 
     //为这位老师添加ac
