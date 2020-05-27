@@ -199,6 +199,11 @@ function UserService() {
       teachers = users;
     });
 
+    teachers.forEach(teacher => {
+      teacher["chosen"] = false;
+      // Todo 加一个当前教师学生人数
+    });
+
     let teacher_chosen_ids = [];
     await Employment.find(
       { _idMember: encryptMethod.IDDecrypt(_idMember) },
