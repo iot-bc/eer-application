@@ -59,7 +59,7 @@ function UserService() {
   this.getUserInformation = async function(_idUser) {
     let info = [];
     await User.findById(encryptMethod.IDDecrypt(_idUser), function(err, user) {
-      if (err) return console.err(err);
+      if (err) return console.log(err);
       info.push(_idUser, user);
     });
     return info;
@@ -136,7 +136,7 @@ function UserService() {
         });
       })
       .on("error", function(e) {
-        console.error(e);
+        console.log(e);
       });
 
     return result;
@@ -324,7 +324,7 @@ function UserService() {
         _idTeacher: _idTeacher
       },
       function(err, employment) {
-        if (err) return console.err(err);
+        if (err) return console.log(err);
         result = _idMember;
       }
     );
