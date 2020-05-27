@@ -333,17 +333,28 @@ function UserService() {
 
   //老师查看其所带的学生
   this.teacherCheckMembers = async function(_idTeacher) {
+    let _ids = [];
     let result = [];
+    let students = [];
     await Employment.find(
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
         if (err) return console.log(err);
         else if (!ids) result.push(_idTeacher, "no student");
-        else result.push(_idTeacher, ids);
+        else _ids = ids;
       }
     );
-    return result;
+    if (result[1]) return result;
+    else {
+      for (let i = 0; i < _ids.length; i++) {
+        await User.findById(_ids[i]._idMember, function(err, user) {
+          students.push(user);
+        });
+      }
+      result.push(_idTeacher, students);
+      return result;
+    }
   };
 
   //首先确定其权限是否够资格，然后再记录这个操作
