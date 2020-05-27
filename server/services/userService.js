@@ -100,8 +100,9 @@ function UserService() {
     await Device.findOne(
       { _idUser: encryptMethod.IDDecrypt(_idUser) },
       function(err, device) {
-        if (err) result.push(_idUser, "no device");
-        if (device)
+        if (err) return console.log(err);
+        else if (!device) result.push(_idUser, "no device");
+        else if (device)
           result.push(
             _idUser,
             encryptMethod.IDEncrypt(device._id),
@@ -164,7 +165,7 @@ function UserService() {
     await Device.findOneAndRemove(
       { _id: encryptMethod.IDDecrypt(_idDevice) },
       function(err, device) {
-        if (err) return console.err(err);
+        if (err) return console.log(err);
         result.push(_idUser, _idDevice);
       }
     );
@@ -320,7 +321,7 @@ function UserService() {
     await Employment.findOneAndRemove(
       {
         _idMember: encryptMethod.IDDecrypt(_idMember),
-        _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
+        _idTeacher: _idTeacher
       },
       function(err, employment) {
         if (err) return console.err(err);
