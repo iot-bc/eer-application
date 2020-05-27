@@ -202,6 +202,11 @@ function UserService() {
     teachers.forEach(teacher => {
       teacher["chosen"] = false;
       // Todo 加一个当前教师学生人数
+      let id = teacher._id + "";
+      Employment.find({ _idTeacher: id }, function(err, employments) {
+        if (err) return console.log(err);
+        teacher["number"] = employments.length;
+      });
     });
 
     let teacher_chosen_ids = [];
@@ -287,8 +292,8 @@ function UserService() {
 
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
     let employment = new Employment({
-      _idMember: encryptMethod.IDEncrypt(_idMember),
-      _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
+      _idMember: encryptMethod.IDDecrypt(_idMember),
+      _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
     });
 
     //为这位老师添加ac
