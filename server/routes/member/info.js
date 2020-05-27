@@ -9,6 +9,7 @@ const router = require("express").Router();
 
 const userService = require("./../../services/serviceFactory").UserService();
 const Message = require("./../../utils/message");
+const firstToUpperCase = require("./../../utils/util").firstToUpperCase;
 
 router.get("/", async function(req, res, next) {
   let mid = res.locals["memberID"];
@@ -18,7 +19,7 @@ router.get("/", async function(req, res, next) {
   let data = {
     id: info[0],
     name: info[1]["userName"],
-    type: info[1]["userType"],
+    type: firstToUpperCase(info[1]["userType"]),
     org: info[1]["orgID"]
   };
   res.json(new Message(true, data, ""));

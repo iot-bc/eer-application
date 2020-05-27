@@ -2,7 +2,11 @@
   <div class="member-courses">
     <h1>Courses</h1>
     <el-divider />
-    <el-table class="member-course-table" :data="courses" style="width: 100%">
+    <el-table
+      class="member-course-table"
+      :data="courses"
+      style="width: 88%;margin-left: 5%"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" size="small" class="table-hidden-form">
@@ -26,7 +30,7 @@
             </el-form-item>
             <el-form-item
               ><el-button
-                v-if="props.row.chosen"
+                v-if="!props.row.chosen"
                 size="big"
                 type="primary"
                 @click="handleEdit(scope.$index, scope.row)"
@@ -58,12 +62,12 @@
       <el-table-column label="Opreation">
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.chosen"
+            v-if="!scope.row.chosen"
             size="mini"
             type="primary"
             @click="select_cource(scope.row.id)"
             :disabled="!scope.row.status"
-            >Join {{ fake.length }}</el-button
+            >Join</el-button
           >
           <el-button
             v-else
@@ -80,44 +84,44 @@
 </template>
 
 <script>
+import { Message } from "element-ui";
 export default {
   name: "MemberCourses",
   data() {
     return {
-      fake: {},
       courses: [
-        {
-          id: "c001",
-          teacherName: "laoge",
-          desc: "laodeyi",
-          memberNum: 5,
-          status: true,
-          chosen: true
-        },
-        {
-          id: "c002",
-          teacherName: "lbw",
-          desc: "伞兵一号",
-          memberNum: 0,
-          status: false,
-          chosen: true
-        },
-        {
-          id: "c003",
-          teacherName: "pdd",
-          desc: "瘦100斤",
-          memberNum: 1,
-          status: true,
-          chosen: false
-        },
-        {
-          id: "c006",
-          teacherName: "dsm",
-          desc: "十年王者",
-          memberNum: 2,
-          status: true,
-          chosen: false
-        }
+        // {
+        //   id: "c001",
+        //   teacherName: "laoge",
+        //   desc: "laodeyi",
+        //   memberNum: 5,
+        //   status: true,
+        //   chosen: true
+        // },
+        // {
+        //   id: "c002",
+        //   teacherName: "lbw",
+        //   desc: "伞兵一号",
+        //   memberNum: 0,
+        //   status: false,
+        //   chosen: true
+        // },
+        // {
+        //   id: "c003",
+        //   teacherName: "pdd",
+        //   desc: "瘦100斤",
+        //   memberNum: 1,
+        //   status: true,
+        //   chosen: false
+        // },
+        // {
+        //   id: "c006",
+        //   teacherName: "dsm",
+        //   desc: "十年王者",
+        //   memberNum: 2,
+        //   status: true,
+        //   chosen: false
+        // }
       ]
     };
   },
@@ -134,30 +138,52 @@ export default {
         .get(`/api/member/${encodeURIComponent(this.memberID)}/teacher`)
         .then(res => {
           //
-          this.fake = res.data.data;
+          this.courses = res.data.data;
           // res.data;
         });
     },
-    select_cource(tid) {
-      this.$axios
+    async select_cource(tid) {
+      let message = await this.$axios
         .post(
           `/api/member/${encodeURIComponent(
             this.memberID
           )}/teacher/${encodeURIComponent(tid)}`
         )
-        .then(res => {
-          res.data;
+        .then(res => res.data);
+      if (message.code) {
+        Message({
+          type: "success",
+          message: message.msg
+        });
+        setTimeout(() => {
+          // refresh
+        }, 500);
+      } else
+        Message({
+          type: "danger",
+          message: message.msg
         });
     },
-    delete_course(tid) {
-      this.$axios
+    async delete_course(tid) {
+      let message = await this.$axios
         .delete(
           `/api/member/${encodeURIComponent(
             this.memberID
           )}/teacher/${encodeURIComponent(tid)}`
         )
-        .then(res => {
-          res.data;
+        .then(res => res.data);
+      if (message.code) {
+        Message({
+          type: "success",
+          message: message.msg
+        });
+        setTimeout(() => {
+          // refresh
+        }, 500);
+      } else
+        Message({
+          type: "danger",
+          message: message.msg
         });
     }
   }
@@ -179,7 +205,7 @@ export default {
   &>.el-divider
     margin 16px 0 32px
   &.member-course-table
-    width 80%
+    margin-left 10%
 .table-hidden-form
   font-size 20px !important
 </style>

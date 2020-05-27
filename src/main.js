@@ -21,6 +21,7 @@ import {
   Button,
   Radio,
   RadioGroup,
+  RadioButton,
   Select,
   Option,
   Container,
@@ -56,7 +57,16 @@ Vue.use(Divider);
 Vue.use(Avatar);
 Vue.use(Badge);
 
-useAll(Vue, [Form, FormItem, Input, RadioGroup, Radio, Select, Option]); // form use
+useAll(Vue, [
+  Form,
+  FormItem,
+  Input,
+  RadioGroup,
+  Radio,
+  RadioButton,
+  Select,
+  Option
+]); // form use
 useAll(Vue, [Container, Main, Header, Footer, Aside]); // container use
 useAll(Vue, [Col, Row]); // layout use
 useAll(Vue, [Menu, MenuItemGroup, MenuItem, Submenu]); // menu use
