@@ -191,7 +191,10 @@ function UserService() {
     });
 
     let teachers = [];
-    await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
+    await User.find({ orgID: orgID, userType: "teacher" }, function(
+      err,
+      users
+    ) {
       if (err) return console.log(err);
       teachers = users;
     });
@@ -208,7 +211,8 @@ function UserService() {
 
     for (let i = 0; i < teachers.length; i++) {
       for (let j = 0; j < teacher_chosen_ids.length; j++) {
-        if (teachers[i]._id + "" === teacher_chosen_ids[j]) {
+        let id = teachers[i]._id + "";
+        if (id === teacher_chosen_ids[j]) {
           teachers[i].chosen = true;
         }
       }
