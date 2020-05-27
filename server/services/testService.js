@@ -1,12 +1,16 @@
-// const connect = require("./../utils/db");
-// connect();
+const connect = require("./../utils/db");
+connect();
 
 const EncryptMethod = require("./../utils/encryptMethod");
 const encryptMethod = new EncryptMethod();
 
 const CryptoJS = require("crypto-js");
 
-// let User = require("./../models/userSchema");
+let User = require("./../models/userSchema");
+
+User.find(function(err, user) {
+  console.log(user);
+});
 
 // User.findOne({ userName: "testUser2" }, function(err, user) {
 //   if (err) return console.log(err);

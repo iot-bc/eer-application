@@ -117,10 +117,17 @@ function UserService() {
   };
 
   //直接在边缘节点上获取
-  this.memberGetDataFromDevice = async function(_deviceID) {
+  this.memberGetDataFromDevice = async function(_idUser) {
     //通过这个url 可以获取相应设备的数据
     //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
-    _deviceID = encryptMethod.IDDecrypt(_deviceID); //看看是否需要
+    let _deviceID = "";
+    await Device.findOne(
+      { _idUser: encryptMethod.IDDecrypt(_idUser) },
+      function(err, device) {
+        if (err) return console.log(err);
+        _deviceID = device._id + "";
+      }
+    );
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
