@@ -8,6 +8,7 @@
 const router = require("express").Router();
 const userService = require("./../../services/serviceFactory").UserService();
 const Message = require("./../../utils/message");
+const transferDate = require("./../../utils/util").transferDate;
 
 router
   .route("/")
@@ -26,7 +27,13 @@ router
       return res.json(new Message(false, null, "No device yet"));
     } else {
       //用户已有设备
-      return res.json(new Message(true, deviceInfo, "Has a device"));
+      let data = {
+        ownerID: deviceInfo[0],
+        deviceID: deviceInfo[1],
+        deviceToken: deviceInfo[2],
+        registeredAt: transferDate(deviceInfo[3])
+      };
+      return res.json(new Message(true, data, "Has a device"));
     }
   })
   .post(async function(req, res, next) {

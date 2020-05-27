@@ -5,12 +5,19 @@
 
     <div class="device-info-box" v-if="hasDevice">
       <el-card>
-        <div slot="header">
+        <div class="device-card-header" slot="header">
           <span>Device Info</span>
-          <el-button size="mini" type="danger">delete</el-button>
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            @click="delete_device"
+            circle
+          />
         </div>
-        <div v-for="(item, index) in device" :key="item + index">
-          {{ item }}: {{ index }}
+        <div class="device-card-info">
+          <p v-for="(item, key, index) in device" :key="key + index">
+            {{ key }}: {{ item }}
+          </p>
         </div>
       </el-card>
     </div>
@@ -115,20 +122,34 @@ export default {
     font-weight 400
   &>.el-divider
     margin 16px 0 32px
-  &>.device-info-box
-    min-height 200px
-    //background black
-  &>.device-register-box
+.device-info-box
+  width 70%
+  margin-left 15%
+  min-height 200px
+  &>.el-card
     width 100%
-    height 100%
-    &>.el-button
-      width (@width * 0.4)
-      height @width
-      font-size 240px
-      line-height @font-size
-      margin-top 50px
-      margin-bottom 20px
-    &>p
-      font-size 28px
-      text-decoration underline
+    & .device-card-header
+      text-align left
+      &>span
+        font-size 24px
+        font-weight lighter
+      &>.el-button
+        float right
+    &>.device-card-info
+      text-align right
+      font-size 24px
+    //background black
+.device-register-box
+  width 100%
+  height 100%
+  &>.el-button
+    width (@width * 0.4)
+    height @width
+    font-size 240px
+    line-height @font-size
+    margin-top 50px
+    margin-bottom 20px
+  &>p
+    font-size 28px
+    text-decoration underline
 </style>

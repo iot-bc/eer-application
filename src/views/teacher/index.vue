@@ -9,13 +9,13 @@
       </el-aside>
       <el-main>
         <router-view />
-        <p class="temp-link">
-          <router-link :to="{ name: 'TeacherProfile' }">Profile</router-link> |
-          <router-link :to="{ name: 'TeacherCourse' }">Course</router-link> |
-          <router-link :to="{ name: 'TeacherMember', params: { mid: 25 } }">
-            Data
-          </router-link>
-        </p>
+        <!--        <p class="temp-link">-->
+        <!--          <router-link :to="{ name: 'TeacherProfile' }">Profile</router-link> |-->
+        <!--          <router-link :to="{ name: 'TeacherCourse' }">Course</router-link> |-->
+        <!--          <router-link :to="{ name: 'TeacherMember', params: { mid: 25 } }">-->
+        <!--            Data-->
+        <!--          </router-link>-->
+        <!--        </p>-->
       </el-main>
     </el-container>
   </el-container>

@@ -157,7 +157,7 @@ export default {
           message: message.msg
         });
         setTimeout(() => {
-          // refresh
+          this.get_courses();
         }, 500);
       } else
         Message({
@@ -179,7 +179,7 @@ export default {
           message: message.msg
         });
         setTimeout(() => {
-          // refresh
+          this.get_courses();
         }, 500);
       } else
         Message({
