@@ -282,8 +282,8 @@ function UserService() {
 
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
     let employment = new Employment({
-      _idMember: encryptMethod.IDEncrypt(_idMember),
-      _idTeacher: encryptMethod.IDEncrypt(_idTeacher)
+      _idMember: encryptMethod.IDDecrypt(_idMember),
+      _idTeacher: encryptMethod.IDDecrypt(_idTeacher)
     });
 
     //为这位老师添加ac
