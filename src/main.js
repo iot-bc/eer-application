@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import VeLine from "v-charts/lib/line.common";
 import feathers from "vue-icon";
 
 import useAll from "./utils/useAll";
@@ -76,6 +77,8 @@ useAll(Vue, [Dropdown, DropdownMenu, DropdownItem]);
 useAll(Vue, [Tabs, TabPane]); // tab use
 useAll(Vue, [Table, TableColumn]); // table use
 useAll(Vue, [Popover, Popconfirm, Tooltip, Loading]); // notice use
+
+Vue.component(VeLine.name, VeLine);
 
 Vue.use(feathers, "v-icon");
 
