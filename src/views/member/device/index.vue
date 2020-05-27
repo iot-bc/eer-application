@@ -40,7 +40,7 @@ export default {
     return {
       hasDevice: false,
       deviceToken: "",
-      device: {},
+      device: null,
       deviceAddress: ""
     };
   },

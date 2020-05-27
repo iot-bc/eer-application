@@ -5,13 +5,13 @@
       <el-button
         size="medium"
         type="primary"
-        @click="$router.push({ name: 'Login', params: { type: 'login' } })"
+        @click="$router.push({ name: 'Login' })"
         >Login</el-button
       >
       <el-button
         size="medium"
         type="primary"
-        @click="$router.push({ name: 'Login', params: { type: 'register' } })"
+        @click="$router.push({ name: 'Register' })"
         >Register</el-button
       >
     </el-row>

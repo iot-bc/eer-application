@@ -3,11 +3,9 @@
     <el-header id="header" height="30px">
       <router-link :to="{ name: 'Home' }">Home</router-link> |
       <router-link :to="{ name: 'Test' }">Test</router-link> |
-      <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
+      <router-link :to="{ name: 'Login' }">Login</router-link>
       |
-      <router-link :to="{ name: 'Register', params: { type: 'dd' } }"
-        >Register</router-link
-      >
+      <router-link :to="{ name: 'Register' }">Register</router-link>
       |
       <router-link :to="{ name: 'Member' }">Member</router-link>
       |
