@@ -8,11 +8,11 @@
 const router = require("express").Router();
 const userService = require("./../../services/serviceFactory").UserService();
 const Message = require("./../../utils/message");
+const transferDate = require("./../../utils/util").transferDate;
 
 router
   .route("/")
   .all(function(req, res, next) {
-    console.log(req.originalUrl);
     next();
   })
   .get(async function(req, res) {
@@ -26,14 +26,19 @@ router
       return res.json(new Message(false, null, "No device yet"));
     } else {
       //用户已有设备
-      return res.json(new Message(true, deviceInfo, "Has a device"));
+      let data = {
+        ownerID: deviceInfo[0],
+        deviceID: deviceInfo[1],
+        deviceToken: deviceInfo[2],
+        registeredAt: transferDate(deviceInfo[3])
+      };
+      return res.json(new Message(true, data, "Has a device"));
     }
   })
   .post(async function(req, res, next) {
     // 用户注册设备，得到的结果是一个[]，第一项是加密过后用户的id，第二项是加密过后设备的id（mongodb自动生成的）
     let mid = res.locals["memberID"];
     let deviceToken = req.body.deviceToken;
-    console.log(deviceToken + "++++++");
     let result = await userService.userRegisterDevice(mid, deviceToken);
 
     if (result) {
@@ -49,9 +54,9 @@ router
     // Todo 直接删用户设备，后端找出设备; 操作成功与否判断
     let mid = res.locals["memberID"];
     let result = await userService.userCancelDevice(mid);
-
-    if (req.url === null) next();
-    res.send({ device: "laoge's devicessss" });
+    if (result) {
+      return res.json(new Message(true, result, ""));
+    } else return res.json(new Message(false, result, ""));
   });
 
 module.exports = router;

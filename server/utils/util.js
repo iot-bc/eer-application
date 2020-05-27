@@ -12,6 +12,14 @@ function firstToUpperCase(str) {
   return str;
 }
 
+function transferDate(date) {
+  return date
+    .toJSON()
+    .replace(/[a-zA-Z]/, " ")
+    .split(".")[0];
+}
+
 module.exports = {
-  firstToUpperCase
+  firstToUpperCase,
+  transferDate
 };

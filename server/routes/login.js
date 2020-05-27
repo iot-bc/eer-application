@@ -16,7 +16,6 @@ router.post("/", async function(req, res, next) {
     req.body.username,
     req.body.password
   );
-  console.log(isSuccess);
   if (!isSuccess) {
     //登陆失败
     return res.json(

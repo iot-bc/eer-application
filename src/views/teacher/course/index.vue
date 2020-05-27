@@ -25,7 +25,10 @@
       </div>
     </el-col>
     <el-col class="member-data-part" span="12">
-      <div class="member-data-area"></div>
+      <div class="member-data-area">
+        {{ course }}
+      </div>
+      {{ memberList }}
     </el-col>
   </div>
 </template>

@@ -12,7 +12,7 @@ const teacherCourseRouter = require("./course");
 const teacherDataRouter = require("./data");
 
 router.use("/info", teacherInfoRouter);
-router.use("/member", teacherCourseRouter);
+router.use("/course", teacherCourseRouter);
 router.use("/data", teacherDataRouter);
 
 module.exports = router;
