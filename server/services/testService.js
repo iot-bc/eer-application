@@ -1,18 +1,18 @@
-const connect = require("./../utils/db");
-connect();
+// const connect = require("./../utils/db");
+// connect();
 
 const EncryptMethod = require("./../utils/encryptMethod");
 const encryptMethod = new EncryptMethod();
 
 const CryptoJS = require("crypto-js");
 
-let User = require("./../models/userSchema");
+// let User = require("./../models/userSchema");
 
-User.findOne({ userName: "testUser2" }, function(err, user) {
-  if (err) return console.log(err);
-  let result = user._id + "";
-  console.log(result);
-});
+// User.findOne({ userName: "testUser2" }, function(err, user) {
+//   if (err) return console.log(err);
+//   let result = user._id + "";
+//   console.log(result);
+// });
 
 // let user = new User({
 //   userName: "testUser3",
@@ -138,3 +138,38 @@ User.findOne({ userName: "testUser2" }, function(err, user) {
 // 	if(err) return console.err(err);
 // 	console.log(user.getUserName());
 // });
+
+var str = "12345678";
+// 密钥 16 位
+var key = "0123456789abcdef";
+// 初始向量 initial vector 16 位
+var iv = "0123456789abcdef";
+// key 和 iv 可以一致
+
+key = CryptoJS.enc.Utf8.parse(key);
+iv = CryptoJS.enc.Utf8.parse(iv);
+
+var encrypted = CryptoJS.AES.encrypt(str, key, {
+  iv: iv,
+  mode: CryptoJS.mode.CBC,
+  padding: CryptoJS.pad.Pkcs7
+});
+
+// 转换为字符串
+encrypted = encrypted.toString();
+
+console.log("加密");
+console.log(encrypted);
+
+// 解密
+var decrypted = CryptoJS.AES.decrypt("9qoxu+JRDbR1rMgd2US+fQ==", key, {
+  iv: iv,
+  mode: CryptoJS.mode.CBC,
+  padding: CryptoJS.pad.Pkcs7
+});
+
+// 转换为 utf8 字符串
+decrypted = CryptoJS.enc.Utf8.stringify(decrypted);
+
+console.log("解密");
+console.log(decrypted);

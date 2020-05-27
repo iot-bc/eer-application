@@ -10,6 +10,11 @@ let deviceSchema = new Schema({
   _idUser: {
     type: String,
     required: true
+  },
+
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
