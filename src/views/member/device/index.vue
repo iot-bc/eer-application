@@ -99,9 +99,18 @@ export default {
       this.$axios
         .delete(`/api/member/${encodeURIComponent(this.memberID)}/device`)
         .then(res => {
-          res.data;
-
-          this.get_device();
+          let message = res.data;
+          if (message.code) {
+            Message({
+              type: "warning",
+              message: message.msg
+            });
+            setTimeout(() => this.get_device(), 500);
+          } else
+            Message({
+              type: "danger",
+              message: message.msg
+            });
         });
     }
   }

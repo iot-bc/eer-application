@@ -8,5 +8,10 @@
 module.exports = {
   url: "mongodb://localhost/",
   database: "eer",
-  options: { useNewUrlParser: true, useUnifiedTopology: true, keepAlive: 150 }
+  options: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    keepAlive: 150,
+    useFindAndModify: false
+  }
 };
