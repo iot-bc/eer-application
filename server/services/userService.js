@@ -6,6 +6,8 @@ const Device = require("./../models/deviceSchema");
 const Employment = require("./../models/employmentSchema");
 const Organization = require("./../models/organizationSchema");
 
+const axios = require("axios");
+
 const { Wallets, Gateway } = require("fabric-network");
 
 function UserService() {
@@ -115,31 +117,14 @@ function UserService() {
   };
 
   //直接在边缘节点上获取
-  this.memberGetDataFromDevice = function(_deviceID) {
+  this.memberGetDataFromDevice = async function(_deviceID) {
     //通过这个url 可以获取相应设备的数据
     //末尾的数字1代表这个设备最近的一条记录。可以改为n, 即最近的n条记录
     _deviceID = encryptMethod.IDDecrypt(_deviceID); //看看是否需要
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
-    let http = require("http");
-    let result = {};
-    http
-      .get(url, function(res) {
-        let data = "";
-        res.on("data", function(d) {
-          data += d;
-        });
-        res.on("end", function() {
-          result = JSON.parse(data);
-          console.log(result);
-        });
-      })
-      .on("error", function(e) {
-        console.log(e);
-      });
-
-    return result;
+    return await axios.get(url).then(res => res.data);
   };
 
   this.userCancelDevice = async function(_idUser) {

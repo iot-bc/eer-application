@@ -2,7 +2,10 @@
   <div class="member-data">
     <h1>Data</h1>
     <el-divider />
-    <div v-if="hasDevice">{{ data }}</div>
+    <div v-if="hasDevice">
+      {{ data }}
+      <el-button @click="get_data"></el-button>
+    </div>
     <p v-else>
       Haven't registered your device, please click
       <router-link :to="{ name: 'MemberDevice' }">here</router-link> to register
@@ -17,7 +20,8 @@ export default {
   data() {
     return {
       data: {},
-      hasDevice: false
+      hasDevice: false,
+      deviceID: null
     };
   },
   created() {
@@ -34,15 +38,22 @@ export default {
         .then(res => {
           let message = res.data;
           this.hasDevice = message.code;
+          if (message.code) this.deviceID = message.data["deviceID"];
         });
     },
     async get_data() {
       let message = await this.$axios
-        .get(`/api/member/${encodeURIComponent(this.memberID)}/data`)
+        .get(
+          `/api/member/${encodeURIComponent(
+            this.memberID
+          )}/data/${encodeURIComponent(
+            "lwaND5F7Nfbh4QVvnffo99joGpJYQmqNMnroVT/UqKg="
+          )}`
+        )
         .then(res => res.data);
       if (message.code) {
         this.hasDevice = true;
-        this.info = message.data;
+        this.data = message.data;
       } else this.hasDevice = false;
     }
   }
