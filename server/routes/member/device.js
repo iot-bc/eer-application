@@ -30,7 +30,7 @@ router
         ownerID: deviceInfo[0],
         deviceID: deviceInfo[1],
         deviceToken: deviceInfo[2],
-        registeredAt: transferDate(deviceInfo[3])
+        registeredAt: deviceInfo[3]
       };
       return res.json(new Message(true, data, "Has a device"));
     }

@@ -1,16 +1,25 @@
 <template>
   <div class="teacher-course">
-    <el-col class="teacher-course-part" span="12">
-      <div class="course-info-area"></div>
-      <div class="course-members-area">
+    <h1>Course</h1>
+    <el-divider />
+    <el-col class="teacher-course-part" span="10">
+      <el-card class="course-members-area">
         <el-table
           class="course-members-table"
           :data="memberList"
           style="width: 100%"
         >
-          <el-table-column label="MemberID" prop="id"> </el-table-column>
-          <el-table-column label="Name" prop="name"> </el-table-column>
-          <el-table-column label="Opreation">
+          <el-table-column
+            label="MemberID"
+            prop="id"
+            align="center"
+            min-width="150px"
+            show-overflow-tooltip
+          >
+          </el-table-column>
+          <el-table-column label="Name" prop="name" align="center">
+          </el-table-column>
+          <el-table-column label="Opreation" align="center">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -22,13 +31,10 @@
             </template>
           </el-table-column>
         </el-table>
-      </div>
+      </el-card>
     </el-col>
-    <el-col class="member-data-part" span="12">
-      <div class="member-data-area">
-        {{ course }}
-      </div>
-      {{ memberList }}
+    <el-col class="member-data-part" span="14">
+      <div class="member-data-area"></div>
     </el-col>
   </div>
 </template>
@@ -44,7 +50,6 @@ export default {
     };
   },
   created() {
-    this.init_stub();
     this.get_course();
   },
   mounted() {},
@@ -54,21 +59,17 @@ export default {
     }
   },
   methods: {
-    init_stub() {
-      this.memberList.push({
-        id: 1,
-        name: 22
-      });
-    },
-    async get_course() {
-      let message = await this.$axios
+    get_course() {
+      this.$axios
         .get(`/api/teacher/${encodeURIComponent(this.teacherID)}/course`)
-        .then(res => res.data);
-      if (message.code) {
-        message.data.forEach(member => {
-          this.memberList.push(member);
+        .then(res => {
+          let message = res.data;
+          if (message.code) {
+            message.data.forEach(member => {
+              this.memberList.push(member);
+            });
+          }
         });
-      }
     },
     set_course(tcode) {
       this.$axios
@@ -85,6 +86,9 @@ export default {
         .then(res => {
           res.data;
         });
+    },
+    simplify_id(id) {
+      return id.substr(0, 10) + " ...";
     }
   }
 };
@@ -92,17 +96,23 @@ export default {
 
 <style lang="stylus" scoped>
 .teacher-course
+  width 100%
+  height 100%
+  &>h1
+    margin 0
+    width 100%
+    text-align left
+    left 0
+    font-size 32px
+    line-height 32px
+    font-weight 400
+  &>.el-divider
+    margin 16px 0 48px
   &>.teacher-course-part
     height 100%
-    &>.course-info-area
-      width 100%
-      height 250px
-      border 2px solid black
     &>.course-members-area
       height auto
-      width 90%
-      padding 1% 5%
-      border 2px solid black
+      width 100%
   &>.member-data-part
     height 100%
     &>.member-data-area

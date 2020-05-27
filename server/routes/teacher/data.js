@@ -6,12 +6,17 @@
  */
 
 const router = require("express").Router();
+const userService = require("./../../services/serviceFactory").UserService();
+const Message = require("./../../utils/message");
 
-router.get("/:memberID", function(req, res, next) {
+router.get("/:memberID", async function(req, res, next) {
+  let tid = req.locals["teacherID"];
   let mid = req.params.memberID;
+  let data = await userService.memberGetDataFromDevice(tid, mid);
   // logic process
-  if (!mid) next();
-  res.json("get data of member with id " + mid);
+  if (data) {
+    return res.json(new Message(true, data, ""));
+  } else return res.json(new Message(false, null, ""));
 });
 
 module.exports = router;

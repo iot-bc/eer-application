@@ -6,11 +6,17 @@
  */
 
 const router = require("express").Router();
+const userService = require("./../../services/serviceFactory").UserService();
+const Message = require("./../../utils/message");
 
-router.get("/", function(req, res, next) {
+router.get("/", async function(req, res) {
+  // Todo memberID
+  let mid = res.locals["memberID"];
+  let data = await userService.memberGetDataFromDevice(mid);
   // logic process
-  if (req.body) next();
-  res.json(req.originalUrl);
+  if (data) {
+    return res.json(new Message(true, data, ""));
+  } else return res.json(new Message(false, null, ""));
 });
 
 module.exports = router;

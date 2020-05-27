@@ -12,8 +12,7 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Account</el-dropdown-item>
-          <el-dropdown-item disabled>Settings</el-dropdown-item>
+          <el-dropdown-item command="profile">Account</el-dropdown-item>
           <el-dropdown-item command="logout" divided>Logout</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -35,11 +34,16 @@ export default {
   mounted() {},
   computed: {
     userName: () => sessionStorage.getItem("name"),
-    userID: () => sessionStorage.getItem("id")
+    userID: () => sessionStorage.getItem("id"),
+    userProfile: () => {
+      let name = sessionStorage.getItem("type");
+      return name.replace(name[0], name[0].toUpperCase()) + "Profile";
+    }
   },
   methods: {
     handleCommmand(command) {
       if (command === "logout") this.sign_out();
+      if (command === "profile") this.$router.push({ name: this.userProfile });
     },
     sign_out() {
       // this.$axios.post()

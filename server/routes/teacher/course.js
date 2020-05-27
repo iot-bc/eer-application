@@ -13,8 +13,8 @@ router.get("/", async function(req, res, next) {
   let tid = res.locals["teacherID"];
   // logic process
   // id是老师的id，获得的result是一个[]，第一项是老师id，第二项是学生列表
-  let result = await userService.teacherCheckMembers(tid);
-  res.json(new Message(true, result[1], ""));
+  let members = await userService.teacherCheckMembers(tid);
+  res.json(new Message(true, members, ""));
 });
 
 // router.post("/", function(req, res, next) {

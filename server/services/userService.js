@@ -334,26 +334,28 @@ function UserService() {
   //老师查看其所带的学生
   this.teacherCheckMembers = async function(_idTeacher) {
     let _ids = [];
-    let result = [];
+    let sign = false;
     let students = [];
     await Employment.find(
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
         if (err) return console.log(err);
-        else if (!ids) result.push(_idTeacher, "no student");
+        else if (!ids) sign = true;
         else _ids = ids;
       }
     );
-    if (result[1]) return result;
+    if (sign) return [];
     else {
       for (let i = 0; i < _ids.length; i++) {
         await User.findById(_ids[i]._idMember, function(err, user) {
-          students.push(user);
+          students.push({
+            id: encryptMethod.IDEncrypt(user["_id"]),
+            name: user["userName"]
+          });
         });
       }
-      result.push(_idTeacher, students);
-      return result;
+      return students;
     }
   };
 
