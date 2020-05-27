@@ -202,6 +202,11 @@ function UserService() {
     teachers.forEach(teacher => {
       teacher["chosen"] = false;
       // Todo 加一个当前教师学生人数
+      let id = teacher._id + "";
+      Employment.find({ _idTeacher: id }, function(err, employments) {
+        if (err) return console.log(err);
+        teacher["number"] = employments.length;
+      });
     });
 
     let teacher_chosen_ids = [];
