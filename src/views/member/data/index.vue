@@ -2,7 +2,7 @@
   <div class="member-data">
     <h1>Data</h1>
     <el-divider />
-    <div v-if="hasDevice">{{ info }}</div>
+    <div v-if="hasDevice">{{ data }}</div>
     <p v-else>
       Haven't registered your device, please click
       <router-link :to="{ name: 'MemberDevice' }">here</router-link> to register
@@ -16,16 +16,26 @@ export default {
   name: "MemberData",
   data() {
     return {
-      info: {},
+      data: {},
       hasDevice: false
     };
   },
-  created() {},
+  created() {
+    this.has_device();
+  },
   mounted() {},
   computed: {
     memberID: () => sessionStorage.getItem("id")
   },
   methods: {
+    has_device() {
+      this.$axios
+        .get(`/api/member/${encodeURIComponent(this.memberID)}/device`)
+        .then(res => {
+          let message = res.data;
+          this.hasDevice = message.code;
+        });
+    },
     async get_data() {
       let message = await this.$axios
         .get(`/api/member/${encodeURIComponent(this.memberID)}/data`)

@@ -143,6 +143,7 @@ export default {
         });
     },
     async select_cource(tid) {
+      console.log(tid);
       let message = await this.$axios
         .post(
           `/api/member/${encodeURIComponent(

@@ -24,8 +24,7 @@ router.get(
         id: teacher["_id"].toString(),
         teacherName: teacher["userName"],
         desc: `Teacher ${teacher["userName"]}'s course`,
-        // Todo
-        memberNum: 0,
+        memberNum: teacher["number"],
         status: true,
         chosen: teacher["chosen"]
       });

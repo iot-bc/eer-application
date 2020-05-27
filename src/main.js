@@ -38,6 +38,7 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  Card,
   Table,
   TableColumn,
   Tabs,
@@ -56,6 +57,7 @@ Vue.use(Icon);
 Vue.use(Divider);
 Vue.use(Avatar);
 Vue.use(Badge);
+Vue.use(Card);
 
 useAll(Vue, [
   Form,

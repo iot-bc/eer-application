@@ -2,8 +2,17 @@
   <div class="member-device">
     <h1>Device</h1>
     <el-divider />
+
     <div class="device-info-box" v-if="hasDevice">
-      device。。。
+      <el-card>
+        <div slot="header">
+          <span>Device Info</span>
+          <el-button size="mini" type="danger">delete</el-button>
+        </div>
+        <div v-for="(item, index) in device" :key="item + index">
+          {{ item }}: {{ index }}
+        </div>
+      </el-card>
     </div>
     <div class="device-register-box" v-else>
       <el-button
@@ -28,7 +37,9 @@ export default {
       deviceAddress: ""
     };
   },
-  created() {},
+  created() {
+    this.get_device();
+  },
   mounted() {},
   computed: {
     memberID: () => sessionStorage.getItem("id")
@@ -38,7 +49,13 @@ export default {
       this.$axios
         .get(`/api/member/${encodeURIComponent(this.memberID)}/device`)
         .then(res => {
-          res.data;
+          let message = res.data;
+          if (message.code) {
+            this.hasDevice = true;
+            this.device = message.data;
+          } else {
+            this.hasDevice = false;
+          }
         });
     },
     add_device() {
@@ -53,6 +70,7 @@ export default {
             type: "success",
             message: msg
           });
+          this.get_device();
         })
         .catch(() => {
           Message({
@@ -75,6 +93,8 @@ export default {
         .delete(`/api/member/${encodeURIComponent(this.memberID)}/device`)
         .then(res => {
           res.data;
+
+          this.get_device();
         });
     }
   }
@@ -97,7 +117,7 @@ export default {
     margin 16px 0 32px
   &>.device-info-box
     min-height 200px
-    background black
+    //background black
   &>.device-register-box
     width 100%
     height 100%
