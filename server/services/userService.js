@@ -13,7 +13,7 @@ function UserService() {
     let isRegistered = false;
     let user_id = "";
     await User.findOne({ userName: userName }, function(err, user) {
-      if (err) console.log(err);
+      if (err) return console.log(err);
       else if (user) isRegistered = true;
     });
 
@@ -47,7 +47,7 @@ function UserService() {
     let result = [];
     password = encryptMethod.hashEncrypt(password);
     await User.findOne({ userName: userName }, function(err, user) {
-      if (err) console.log(err);
+      if (err) return console.log(err);
       else if (!user) result = false;
       else if (password === user.password)
         result.push(encryptMethod.IDEncrypt(user._id), user.userType);
@@ -163,7 +163,7 @@ function UserService() {
 
     let result = [];
     await Device.findOneAndRemove(
-      { _id: encryptMethod.IDDecrypt(_idDevice) },
+      { _idUser: encryptMethod.IDDecrypt(_idUser) },
       function(err, device) {
         if (err) return console.log(err);
         result.push(_idUser, _idDevice);
@@ -338,7 +338,8 @@ function UserService() {
       { _idTeacher: encryptMethod.IDDecrypt(_idTeacher) },
       "_idMember",
       function(err, ids) {
-        if (err) result.push(_idTeacher, "no student");
+        if (err) return console.log(err);
+        else if (!ids) result.push(_idTeacher, "no student");
         else result.push(_idTeacher, ids);
       }
     );
