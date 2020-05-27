@@ -200,13 +200,19 @@ function UserService() {
       teachers = users;
     });
 
+    let teacherList = [];
     teachers.forEach(teacher => {
-      teacher["chosen"] = false;
-      // Todo 加一个当前教师学生人数
       let id = teacher._id + "";
       Employment.find({ _idTeacher: id }, function(err, employments) {
         if (err) return console.log(err);
-        teacher["number"] = employments.length;
+        teacherList.push({
+          id: id,
+          teacherName: teacher["userName"],
+          desc: `Teacher ${teacher["userName"]}'s course`,
+          memberNum: employments.length,
+          status: true,
+          chosen: false
+        });
       });
     });
 
@@ -219,16 +225,17 @@ function UserService() {
         teacher_chosen_ids = ids;
       }
     );
+    console.log(teacher_chosen_ids);
 
-    for (let i = 0; i < teachers.length; i++) {
+    for (let i = 0; i < teacherList.length; i++) {
       for (let j = 0; j < teacher_chosen_ids.length; j++) {
-        let id = teachers[i]._id + "";
-        if (id === teacher_chosen_ids[j]) {
-          teachers[i].chosen = true;
+        let id = teacherList[i].id + "";
+        if (id === teacher_chosen_ids[j]["_idTeacher"]) {
+          teacherList[i].chosen = true;
         }
       }
     }
-    return teachers;
+    return teacherList;
   };
 
   // //展示学生在组织中已经选择的老师
