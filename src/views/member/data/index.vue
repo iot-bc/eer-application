@@ -3,8 +3,8 @@
     <h1>Data</h1>
     <el-divider />
     <div v-if="hasDevice">
-      {{ data }}
-      <el-button @click="get_data"></el-button>
+      {{ eer_data }}
+      <el-button @click="get_data">GetData</el-button>
     </div>
     <p v-else>
       Haven't registered your device, please click
@@ -19,9 +19,9 @@ export default {
   name: "MemberData",
   data() {
     return {
-      data: {},
-      hasDevice: false,
-      deviceID: null
+      eer_data: {},
+      device: null,
+      hasDevice: false
     };
   },
   created() {
@@ -38,23 +38,16 @@ export default {
         .then(res => {
           let message = res.data;
           this.hasDevice = message.code;
-          if (message.code) this.deviceID = message.data["deviceID"];
+          this.device = message.data;
         });
     },
     async get_data() {
       let message = await this.$axios
-        .get(
-          `/api/member/${encodeURIComponent(
-            this.memberID
-          )}/data/${encodeURIComponent(
-            "lwaND5F7Nfbh4QVvnffo99joGpJYQmqNMnroVT/UqKg="
-          )}`
-        )
+        .get(`/api/member/${encodeURIComponent(this.memberID)}/data`)
         .then(res => res.data);
       if (message.code) {
-        this.hasDevice = true;
-        this.data = message.data;
-      } else this.hasDevice = false;
+        this.eer_data = message.data;
+      }
     }
   }
 };

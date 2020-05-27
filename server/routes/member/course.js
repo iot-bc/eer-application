@@ -18,11 +18,6 @@ router.get(
     //第一个参数就是这个member的id，第二个参数是这个member所属组织的id
     //得到的结果是一个[]，第一项是member的id，第二项是一个list，里面放的是很多个userSchema实体，都是该学生已经选的或可以选的老师
     let teachers = await userService.showTeachers(res.locals["memberID"]);
-    // Todo 后台完成？ 合并？
-    // let teachers_not_chosen = await userService.showTeachersNotChosen(
-    //   req.body.id,
-    //   req.body.orgid
-    // );
     res.json(new Message(true, teachers, "Get teacher lists"));
   }
 );
