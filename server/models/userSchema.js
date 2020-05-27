@@ -21,6 +21,11 @@ let userSchema = new Schema({
 
   orgID: {
     type: String
+  },
+
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

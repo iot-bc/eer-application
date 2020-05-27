@@ -21,5 +21,5 @@ yarn-error.log*
 *.sln
 *.sw?
 
-/server/services/testService.js
+server/services/testService.js
 
