@@ -129,7 +129,7 @@ function UserService() {
       }
     );
     const url =
-      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/5";
+      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/6";
 
     return await axios.get(url).then(res => {
       let list = [];
@@ -150,7 +150,7 @@ function UserService() {
         diastolicPressureList: []
       };
 
-      list.forEach(item => {
+      list.reverse().forEach(item => {
         result.heartRates.push(item["heartrate"]);
         result.temperatures.push(item["temperature"]);
         result.systolicPressureList.push(item["systolicpressure"]);

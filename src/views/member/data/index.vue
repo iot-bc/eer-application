@@ -3,8 +3,13 @@
     <h1>Data</h1>
     <el-divider />
     <div v-if="hasDevice">
-      {{ eer_data }}
       <el-button @click="get_data">GetData</el-button>
+      <ve-line
+        class="heartRateChart"
+        height="250px"
+        :data="eer_data['heartRateChartData']"
+        :settings="heartRateChartSetting"
+      />
     </div>
     <p v-else>
       Haven't registered your device, please click
@@ -19,7 +24,29 @@ export default {
   name: "MemberData",
   data() {
     return {
-      eer_data: {},
+      eer_data: {
+        steps: "",
+        layers: "",
+        calorie: "",
+        heartRateChartData: {
+          columns: ["index", "heartRate"],
+          rows: []
+        },
+        temperatureChartData: {
+          columns: [],
+          rows: []
+        },
+        pressureChartData: {
+          columns: [],
+          rows: []
+        }
+      },
+      heartRateChartSetting: {
+        metrics: ["heartRate"],
+        dimension: ["index"],
+        min: ["dataMin"],
+        max: ["dataMax"]
+      },
       device: null,
       hasDevice: false
     };
@@ -46,8 +73,23 @@ export default {
         .get(`/api/member/${encodeURIComponent(this.memberID)}/data`)
         .then(res => res.data);
       if (message.code) {
-        this.eer_data = message.data;
+        this.handle_data(message.data);
       }
+    },
+    handle_data(data) {
+      this.eer_data.steps = data["steps"];
+      this.eer_data.layers = data["layers"];
+      this.eer_data.calorie = data["calorie"];
+      this.eer_data.heartRateChartData.rows = [];
+      this.eer_data.pressureChartData.rows = [];
+      this.eer_data.temperatureChartData.rows = [];
+      data["heartRates"].forEach((heartRate, index) => {
+        this.eer_data.heartRateChartData["rows"].push({
+          // 换成时间
+          index: `${index + 1}`,
+          heartRate
+        });
+      });
     }
   }
 };
@@ -67,4 +109,7 @@ export default {
     font-weight 400
   &>.el-divider
     margin 16px 0 32px
+.heartRateChart
+  margin-right 0 !important
+  width 40% !important
 </style>
