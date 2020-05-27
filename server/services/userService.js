@@ -131,7 +131,13 @@ function UserService() {
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
-    return await axios.get(url).then(res => res.data);
+    return await axios.get(url).then(res => {
+      let list = [];
+      res.data[0]["readings"].forEach(item =>
+        list.push({ name: item["name"], value: item["value"] })
+      );
+      return list;
+    });
   };
 
   this.userCancelDevice = async function(_idUser) {
