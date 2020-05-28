@@ -12,6 +12,7 @@ const Message = require("./../../utils/message");
 router.get("/", async function(req, res) {
   let mid = res.locals["memberID"];
   let data = await userService.memberGetDataFromDevice(mid);
+  console.log(data);
   // logic process
   if (data) {
     return res.json(new Message(true, data, ""));
