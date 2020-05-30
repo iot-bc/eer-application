@@ -374,7 +374,6 @@ function UserService() {
 
     let counter = 0;
 
-    // 每隔10s生成一次数据
     while (counter <= 10) {
       counter++;
       let url = "http://120.26.172.10:48080/api/v1/event";
