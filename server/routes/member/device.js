@@ -30,7 +30,7 @@ router
         ownerID: deviceInfo[0],
         deviceID: deviceInfo[1],
         deviceToken: deviceInfo[2],
-        registeredAt: deviceInfo[3]
+        registeredAt: transferDate(deviceInfo[3])
       };
       return res.json(new Message(true, data, "Has a device"));
     }
@@ -49,9 +49,8 @@ router
   //   if (req.url === null) next();
   //   res.send({ device: "laoge's devicessss" });
   // })
-  .delete(async function(req, res, next) {
+  .delete(async function(req, res) {
     //result是一个[]，第一项是用户id，第二项是设备id
-    // Todo 直接删用户设备，后端找出设备; 操作成功与否判断
     let mid = res.locals["memberID"];
     let result = await userService.userCancelDevice(mid);
     if (result) {

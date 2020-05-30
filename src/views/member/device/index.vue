@@ -134,6 +134,7 @@ export default {
 .device-info-box
   width 70%
   margin-left 15%
+  margin-top 75px
   min-height 200px
   &>.el-card
     width 100%

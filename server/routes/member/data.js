@@ -9,11 +9,10 @@ const router = require("express").Router();
 const userService = require("./../../services/serviceFactory").UserService();
 const Message = require("./../../utils/message");
 
-router.get("/:deviceID", async function(req, res) {
-  // Todo memberID
-  // let mid = res.locals["memberID"];
-  let deviceID = req.params["deviceID"];
-  let data = await userService.memberGetDataFromDevice(deviceID);
+router.get("/", async function(req, res) {
+  let mid = res.locals["memberID"];
+  let data = await userService.memberGetDataFromDevice(mid);
+  console.log(data);
   // logic process
   if (data) {
     return res.json(new Message(true, data, ""));

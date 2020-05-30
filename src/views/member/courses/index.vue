@@ -33,7 +33,7 @@
                 v-if="!props.row.chosen"
                 size="big"
                 type="primary"
-                @click="handleEdit(scope.$index, scope.row)"
+                @click="select_cource(props.row.id)"
                 :disabled="!props.row.status"
                 >Join</el-button
               >
@@ -41,7 +41,7 @@
                 v-else
                 size="big"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
+                @click="delete_course(props.row.id)"
                 :disabled="!props.row.status"
                 >Quit</el-button
               ></el-form-item

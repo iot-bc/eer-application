@@ -11,7 +11,7 @@ const Message = require("./../utils/message");
 
 const userService = require("./../services/serviceFactory").UserService();
 
-router.post("/", async function(req, res, next) {
+router.post("/", async function(req, res) {
   let isSuccess = await userService.userRegister(
     req.body.username,
     req.body.password,
