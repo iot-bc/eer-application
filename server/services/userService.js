@@ -135,7 +135,6 @@ function UserService() {
   };
 
   this.userCancelDevice = async function(_idUser) {
-    //直接一个参数
     let _idDevice = "";
     await Device.findOne(
       { _idUser: encryptMethod.IDDecrypt(_idUser) },
@@ -231,84 +230,17 @@ function UserService() {
     return teacherList;
   };
 
-  // //展示学生在组织中已经选择的老师
-  // this.showTeachersChosen = async function(_idMember) {
-  //   let teacher_chosen_ids = [];
-  //   await Employment.find(
-  //     { _idMember: encryptMethod.IDDecrypt(_idMember) },
-  //     "_idTeacher",
-  //     function(err, _ids) {
-  //       if (err) teacher_chosen_ids = [];
-  //       else teacher_chosen_ids = _ids;
-  //     }
-  //   );
-
-  //   let teachers_chosen = [];
-  //   for (let i = 0; i < teacher_chosen_ids.length; i++) {
-  //     await User.findById(teacher_chosen_ids[i], function(err, user) {
-  //       teachers_chosen.push(user);
-  //     });
-  //   }
-  //   let result = [];
-  //   result.push(_idMember, teachers_chosen);
-  //   return result;
-  // };
-
-  // //展示学生在该组织中可选的老师
-  // this.showTeachersNotChosen = async function(_idMember, orgID) {
-  //   let teacher_chosen_ids = [];
-  //   await Employment.find(
-  //     { _idMember: encryptMethod.IDDecrypt(_idMember) },
-  //     "_idTeacher",
-  //     function(err, _ids) {
-  //       if (err) teacher_chosen_ids = [];
-  //       else teacher_chosen_ids = _ids;
-  //     }
-  //   );
-
-  //   let teachers_all = [];
-  //   await User.find({ orgID: orgID, type: "teacher" }, function(err, users) {
-  //     if (err) return console.err(err);
-  //     teachers_all = users;
-  //   });
-
-  //   let teachers = [];
-  //   for (let i = 0; i < teachers_all.length; i++) {
-  //     let isChosen = false;
-  //     for (let j = 0; j < teacher_chosen_ids.length; j++) {
-  //       if (teachers_all[i]._id === teacher_chosen_ids[j]) {
-  //         isChosen = true;
-  //         break;
-  //       }
-  //     }
-
-  //     if (!isChosen) {
-  //       teachers.push(teachers_all[i]);
-  //     }
-  //   }
-  //   let result = [];
-  //   result.push(_idMember, teachers);
-  //   return result;
-  // };
-
   this.memberEmployTeacher = async function(_idMember, _idTeacher) {
     let employment = new Employment({
       _idMember: encryptMethod.IDDecrypt(_idMember),
       _idTeacher: _idTeacher
     });
-
-    //为这位老师添加ac
-
-    //首先是配置文件
-
     let _employment = await employment.save();
     let result = _idMember;
     return result;
   };
 
   this.memberUnemployTeacher = async function(_idMember, _idTeacher) {
-    //将这条ac变为无效或者删除
-
     let result = "";
     await Employment.findOneAndRemove(
       {
@@ -352,7 +284,20 @@ function UserService() {
   };
 
   //首先确定其权限是否够资格，然后再记录这个操作
-  this.teacherGetDataOfMember = function() {};
+  this.teacherGetDataOfMember = async function(_idTeacher, _idMember) {
+    let _deviceID = "";
+    await Device.findOne(
+      { _idUser: encryptMethod.IDDecrypt(_idMember) },
+      function(err, device) {
+        if (err) return console.log(err);
+        _deviceID = device._id + "";
+      }
+    );
+    const url =
+      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
+
+    return await axios.get(url).then(res => res.data);
+  };
 }
 
 function postData(url, body) {
