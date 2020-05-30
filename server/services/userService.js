@@ -73,16 +73,15 @@ function UserService() {
       _idUser: encryptMethod.IDDecrypt(_idUser)
     });
 
-    //生成url
-    //注册设备
+    let _device = await device.save();
     let device_url = "http://120.26.172.10:48081/api/v1/device";
     let newDevice = {
-      name: device._id,
+      name: _device._id,
       description: "负责监控和采集学生的部分生理数据和运动情况数据",
       adminState: "unlocked",
       operatingState: "enabled",
       protocols: {
-        "device protocol": { "device address": "device " + device._id }
+        "device protocol": { "device address": "device " + _device._id }
       },
       labels: ["health", "counter"],
       location: "",
@@ -90,9 +89,7 @@ function UserService() {
       profile: { name: "device monitor profile" }
     };
     postData(device_url, newDevice);
-
     let result = [];
-    let _device = await device.save();
     result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
     return result;
   };
@@ -128,6 +125,54 @@ function UserService() {
         _deviceID = device._id + "";
       }
     );
+
+    let heartRate = 70,
+      temperature = 36.7,
+      stepNumber = 0,
+      climbHeight = 0,
+      calorie = 0.0,
+      systolicPressure = 120,
+      diastolicPressure = 80;
+
+    let counter = 0;
+
+    // 每隔10s生成一次数据
+    while (counter <= 10) {
+      counter++;
+      let url = "http://120.26.172.10:48080/api/v1/event";
+      let data = {
+        device: _deviceID,
+        readings: [
+          { name: "heartrate", value: heartRate },
+          { name: "temperature", value: temperature },
+          { name: "stepnumber", value: stepNumber },
+          { name: "climbheight", value: climbHeight },
+          { name: "calorie", value: calorie },
+          { name: "systolicpressure", value: systolicPressure }, // 血压的收缩压
+          { name: "diastolicpressure", value: diastolicPressure } // 血压的舒张压
+        ]
+      };
+
+      postData(url, data);
+
+      sleep(1000 * 15);
+
+      heartRate = Math.floor(Math.random() * (110 - 75)) + 75; // 心率在70到110之间波动
+
+      temperature = Math.random() * (37.5 - 36.2) + 36.2; // 温度36.2到37.5之间波动
+      temperature = temperature.toFixed(1);
+
+      stepNumber += Math.floor(Math.random() * 7); // 每隔10秒增加7以内的随机步数
+
+      climbHeight += Math.floor(Math.random());
+
+      calorie += Math.floor(Math.random() * 11);
+
+      systolicPressure = Math.floor(Math.random() * (120 - 100)) + 100; // 收缩压在100到120之间波动
+
+      diastolicPressure = Math.floor(Math.random() * (80 - 60)) + 60; // 舒张压在60到80之间波动
+    }
+
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/8";
 
@@ -318,6 +363,54 @@ function UserService() {
         _deviceID = device._id + "";
       }
     );
+
+    let heartRate = 70,
+      temperature = 36.7,
+      stepNumber = 0,
+      climbHeight = 0,
+      calorie = 0.0,
+      systolicPressure = 120,
+      diastolicPressure = 80;
+
+    let counter = 0;
+
+    // 每隔10s生成一次数据
+    while (counter <= 10) {
+      counter++;
+      let url = "http://120.26.172.10:48080/api/v1/event";
+      let data = {
+        device: _deviceID,
+        readings: [
+          { name: "heartrate", value: heartRate },
+          { name: "temperature", value: temperature },
+          { name: "stepnumber", value: stepNumber },
+          { name: "climbheight", value: climbHeight },
+          { name: "calorie", value: calorie },
+          { name: "systolicpressure", value: systolicPressure }, // 血压的收缩压
+          { name: "diastolicpressure", value: diastolicPressure } // 血压的舒张压
+        ]
+      };
+
+      postData(url, data);
+
+      sleep(1000 * 15);
+
+      heartRate = Math.floor(Math.random() * (110 - 75)) + 75; // 心率在70到110之间波动
+
+      temperature = Math.random() * (37.5 - 36.2) + 36.2; // 温度36.2到37.5之间波动
+      temperature = temperature.toFixed(1);
+
+      stepNumber += Math.floor(Math.random() * 7); // 每隔10秒增加7以内的随机步数
+
+      climbHeight += Math.floor(Math.random());
+
+      calorie += Math.floor(Math.random() * 11);
+
+      systolicPressure = Math.floor(Math.random() * (120 - 100)) + 100; // 收缩压在100到120之间波动
+
+      diastolicPressure = Math.floor(Math.random() * (80 - 60)) + 60; // 舒张压在60到80之间波动
+    }
+
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/8";
 
@@ -369,62 +462,16 @@ function callback(error, response, data) {
   }
 }
 
-
-function virtualDevice(deviceName) {
-	
-	let heartRate = 70, temperature = 36.7, stepNumber = 0,
-		climbHeight = 0, calorie = 0.0, systolicPressure = 120, diastolicPressure = 80;
-
-	// 每隔10s生成一次数据
-	while (true) {
-		let url = "http://120.26.172.10:48080/api/v1/event";
-		let data = {
-			device: deviceName,
-			readings:
-				[{name: "heartrate", value: heartRate},
-					{name: "temperature", value: temperature},
-					{name: "stepnumber", value: stepNumber},
-					{name: "climbheight", value: climbHeight},
-					{name: "calorie", value: calorie},
-					{name: "systolicpressure", value: systolicPressure},  // 血压的收缩压
-					{name: "diastolicpressure", value: diastolicPressure}  // 血压的舒张压
-				]
-		};
-
-		postData(url, data);
-
-		sleep(1000 * 15);  
-
-		heartRate = Math.floor(Math.random() * (110 - 75)) + 75;  // 心率在70到110之间波动
-
-		temperature = Math.random() * (37.5 - 36.2) + 36.2;  // 温度36.2到37.5之间波动
-		temperature = temperature.toFixed(1);
-
-		stepNumber += Math.floor(Math.random() * 7);  // 每隔10秒增加7以内的随机步数
-
-		climbHeight += Math.floor(Math.random());
-
-		calorie += Math.floor(Math.random() * 11);
-
-		systolicPressure = Math.floor(Math.random() * (120 - 100)) + 100;  // 收缩压在100到120之间波动
-
-		diastolicPressure = Math.floor(Math.random() * (80 - 60)) + 60;  // 舒张压在60到80之间波动
-	}
-}
-
-function sleep (delay) {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			try {
-				resolve(1)
-			} catch (e) {
-				reject(0)
-			}
-		}, delay);
-	})
+function sleep(delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        resolve(1);
+      } catch (e) {
+        reject(0);
+      }
+    }, delay);
+  });
 }
 
 module.exports = UserService;
-
-
-
