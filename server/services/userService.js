@@ -73,16 +73,15 @@ function UserService() {
       _idUser: encryptMethod.IDDecrypt(_idUser)
     });
 
-    //生成url
-    //注册设备
+    let _device = await device.save();
     let device_url = "http://120.26.172.10:48081/api/v1/device";
     let newDevice = {
-      name: device._id,
+      name: _device._id,
       description: "负责监控和采集学生的部分生理数据和运动情况数据",
       adminState: "unlocked",
       operatingState: "enabled",
       protocols: {
-        "device protocol": { "device address": "device " + device._id }
+        "device protocol": { "device address": "device " + _device._id }
       },
       labels: ["health", "counter"],
       location: "",
@@ -90,29 +89,9 @@ function UserService() {
       profile: { name: "device monitor profile" }
     };
     postData(device_url, newDevice);
-
+    virtualDevice(_device._id);
     let result = [];
-    let _device = await device.save();
     result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
-    return result;
-  };
-
-  this.userCheckDevice = async function(_idUser) {
-    let result = [];
-    await Device.findOne(
-      { _idUser: encryptMethod.IDDecrypt(_idUser) },
-      function(err, device) {
-        if (err) return console.log(err);
-        else if (!device) result.push(_idUser, "no device");
-        else if (device)
-          result.push(
-            _idUser,
-            encryptMethod.IDEncrypt(device._id),
-            device.deviceName,
-            device.date
-          );
-      }
-    );
     return result;
   };
 
