@@ -94,6 +94,25 @@ function UserService() {
     result.push(_idUser, encryptMethod.IDEncrypt(_device._id));
     return result;
   };
+  
+  this.userCheckDevice = async function(_idUser) {
+    let result = [];
+    await Device.findOne(
+      { _idUser: encryptMethod.IDDecrypt(_idUser) },
+      function(err, device) {
+        if (err) return console.log(err);
+        else if (!device) result.push(_idUser, "no device");
+        else if (device)
+          result.push(
+            _idUser,
+            encryptMethod.IDEncrypt(device._id),
+            device.deviceName,
+            device.date
+          );
+      }
+    );
+    return result;
+  };
 
   //直接在边缘节点上获取
   this.memberGetDataFromDevice = async function(_idUser) {
