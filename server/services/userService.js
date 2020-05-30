@@ -129,7 +129,7 @@ function UserService() {
       }
     );
     const url =
-      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/8";
+      "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
     return await axios.get(url).then(res => {
       let list = [];
@@ -156,10 +156,6 @@ function UserService() {
         result.systolicPressureList.push(item["systolicpressure"]);
         result.diastolicPressureList.push(item["diastolicpressure"]);
       });
-
-      // res.data[0]["readings"].forEach(item => {
-      //   list.push({ name: item["name"], value: item["value"] });
-      // });
       return result;
     });
   };
@@ -325,7 +321,33 @@ function UserService() {
     const url =
       "http://120.26.172.10:48080/api/v1/event/device/" + _deviceID + "/1";
 
-    return await axios.get(url).then(res => res.data);
+    return await axios.get(url).then(res => {
+      let list = [];
+      res.data.forEach(data => {
+        let obj = {};
+        data["readings"].forEach(item => {
+          obj[item["name"]] = item["value"];
+        });
+        list.push(obj);
+      });
+      let result = {
+        steps: list[0]["stepnumber"],
+        layers: list[0]["climbheight"],
+        calorie: list[0]["calorie"],
+        heartRates: [],
+        temperatures: [],
+        systolicPressureList: [],
+        diastolicPressureList: []
+      };
+
+      list.reverse().forEach(item => {
+        result.heartRates.push(item["heartrate"]);
+        result.temperatures.push(item["temperature"]);
+        result.systolicPressureList.push(item["systolicpressure"]);
+        result.diastolicPressureList.push(item["diastolicpressure"]);
+      });
+      return result;
+    });
   };
 }
 
